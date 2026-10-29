@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E423D"/>
+      <stop offset="50%" stop-color="#183632"/>
+      <stop offset="100%" stop-color="#0E2320"/>
+    </linearGradient>
+
+    <!-- Clay Gradient (Left Path / Human Emotion) -->
+    <linearGradient id="clayGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#E29372"/>
+      <stop offset="60%" stop-color="#CE8463"/>
+      <stop offset="100%" stop-color="#A25B3D"/>
+    </linearGradient>
+
+    <!-- Pine/Sage Gradient (Right Path / AI Clarity) -->
+    <linearGradient id="sageGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A5C4AC"/>
+      <stop offset="50%" stop-color="#6F8E76"/>
+      <stop offset="100%" stop-color="#3F634A"/>
+    </linearGradient>
+
+    <!-- Glowing Node Gradient -->
+    <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="1"/>
+      <stop offset="40%" stop-color="#F6E5DA" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#CE8463" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Shadow Effect -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#050E0D" flood-opacity="0.5"/>
+    </filter>
+
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Base Squircle Background -->
+  <rect x="64" y="64" width="896" height="896" rx="224" ry="224" fill="url(#bgGrad)"/>
+
+  <!-- Outer Subtle Ring / Horizon Arc -->
+  <circle cx="512" cy="512" r="380" fill="none" stroke="#DEEAE6" stroke-opacity="0.08" stroke-width="4"/>
+  <circle cx="512" cy="512" r="290" fill="none" stroke="#CE8463" stroke-opacity="0.06" stroke-dasharray="8 12" stroke-width="3"/>
+
+  <!-- Main Emblem: Interlocking MindPath Arcs forming an 'M' & Neural Pathway -->
+  <g filter="url(#shadow)">
+    <!-- Left Loop (Clay Arc - Emotion & Human Touch) -->
+    <path d="M 280 680 C 280 420, 360 280, 512 480 C 580 570, 680 660, 740 680"
+          fill="none"
+          stroke="url(#clayGrad)"
+          stroke-width="54"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+
+    <!-- Right Loop (Sage Arc - AI & Mindful Structure) -->
+    <path d="M 740 680 C 740 420, 660 280, 512 480 C 444 570, 344 660, 280 680"
+          fill="none"
+          stroke="url(#sageGrad)"
+          stroke-width="54"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+
+    <!-- Upward Apex Path (Growth / MindPath Ascent) -->
+    <path d="M 512 480 L 512 280"
+          fill="none"
+          stroke="#DEEAE6"
+          stroke-width="42"
+          stroke-linecap="round"/>
+  </g>
+
+  <!-- Central Spark of Insight (AI / Clarity Star at Apex) -->
+  <g transform="translate(512, 280)">
+    <!-- Outer Glow Aura -->
+    <circle cx="0" cy="0" r="70" fill="url(#glowGrad)"/>
+
+    <!-- Core Star/Spark -->
+    <path d="M 0 -38 Q 0 0, 38 0 Q 0 0, 0 38 Q 0 0, -38 0 Q 0 0, 0 -38 Z" fill="#FFFFFF" filter="url(#softGlow)"/>
+    <circle cx="0" cy="0" r="10" fill="#1E423D"/>
+  </g>
+
+  <!-- Lower Balancing Nodes -->
+  <circle cx="280" cy="680" r="24" fill="#CE8463"/>
+  <circle cx="280" cy="680" r="10" fill="#FFFFFF"/>
+
+  <circle cx="740" cy="680" r="24" fill="#6F8E76"/>
+  <circle cx="740" cy="680" r="10" fill="#FFFFFF"/>
+</svg>
