@@ -1,0 +1,652 @@
+<title>MindPath AI Screens</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+
+<style>
+/* Layout: a rail of phone frames on a quiet dove backdrop, each screen built from one token set. */
+:root{
+  --paper:#E9ECE7;
+  --paper-2:#DFE4DE;
+  --screen:#F7F8F5;
+  --surface:#FFFFFF;
+  --ink:#1C2B27;
+  --ink-2:#5E6E68;
+  --ink-3:#93A09A;
+  --pine:#2F5D56;
+  --pine-deep:#1E423D;
+  --pine-soft:#DEEAE6;
+  --clay:#CE8463;
+  --clay-soft:#F6E5DA;
+  --sage:#6F8E76;
+  --sage-soft:#E2EBE1;
+  --peri:#7E90BB;
+  --line:#D9E0DA;
+  --line-2:#E8EDE8;
+  --shadow:0 18px 40px -22px rgba(28,43,39,.45), 0 2px 6px -2px rgba(28,43,39,.10);
+  --display:'Fraunces',Georgia,'Times New Roman',serif;
+  --sans:'Hanken Grotesk','Segoe UI',system-ui,-apple-system,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#101917;
+    --paper-2:#16211E;
+    --screen:#141E1B;
+    --surface:#1C2824;
+    --ink:#E9EEEA;
+    --ink-2:#A2B1AB;
+    --ink-3:#6C7C76;
+    --pine:#6FA89C;
+    --pine-deep:#2B544E;
+    --pine-soft:#213330;
+    --clay:#DD9B79;
+    --clay-soft:#332520;
+    --sage:#8CB091;
+    --sage-soft:#1F2B22;
+    --peri:#93A4CD;
+    --line:#2A3834;
+    --line-2:#223029;
+    --shadow:0 18px 40px -22px rgba(0,0,0,.7), 0 2px 6px -2px rgba(0,0,0,.4);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#101917;
+  --paper-2:#16211E;
+  --screen:#141E1B;
+  --surface:#1C2824;
+  --ink:#E9EEEA;
+  --ink-2:#A2B1AB;
+  --ink-3:#6C7C76;
+  --pine:#6FA89C;
+  --pine-deep:#2B544E;
+  --pine-soft:#213330;
+  --clay:#DD9B79;
+  --clay-soft:#332520;
+  --sage:#8CB091;
+  --sage-soft:#1F2B22;
+  --peri:#93A4CD;
+  --line:#2A3834;
+  --line-2:#223029;
+  --shadow:0 18px 40px -22px rgba(0,0,0,.7), 0 2px 6px -2px rgba(0,0,0,.4);
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  margin:0;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:40px 56px;
+  -webkit-font-smoothing:antialiased;
+}
+
+.head{max-width:1660px;margin:0 auto 36px;display:flex;flex-direction:column;gap:10px}
+.head h1{
+  font-family:var(--display);font-optical-sizing:auto;
+  font-size:clamp(28px,4vw,40px);font-weight:500;margin:0;letter-spacing:-.015em;
+  text-wrap:balance;
+}
+.head p{margin:0;color:var(--ink-2);font-size:15.5px;line-height:1.6;max-width:62ch}
+.head .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.tag{
+  font-size:11.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--pine);background:var(--pine-soft);border-radius:999px;padding:5px 11px;
+}
+.tag.b{color:var(--clay);background:var(--clay-soft)}
+
+.rail{
+  display:grid;gap:30px;
+  grid-template-columns:repeat(auto-fit,minmax(290px,390px));
+  justify-content:center;max-width:1660px;margin:0 auto;
+}
+
+figure.phone{margin:0;display:flex;flex-direction:column;gap:12px;align-items:center;min-width:0}
+.frame{
+  width:100%;max-width:390px;aspect-ratio:390/812;
+  background:var(--screen);border-radius:38px;overflow:hidden;
+  box-shadow:var(--shadow);border:1px solid var(--line);
+  position:relative;container-type:inline-size;
+}
+figcaption{font-size:12.5px;font-weight:600;color:var(--ink-2);letter-spacing:.04em;text-transform:uppercase}
+
+/* scale everything inside the frame to its real width */
+.scr{
+  position:absolute;inset:0;width:390px;height:812px;
+  transform-origin:top left;
+  transform:scale(calc(100cqw / 390));
+  display:flex;flex-direction:column;
+  font-size:14px;color:var(--ink);
+}
+.statusbar{
+  height:44px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 22px;font-size:12.5px;font-weight:600;color:var(--ink-2);flex:none;
+}
+.statusbar .dots{display:flex;gap:4px;align-items:center}
+.statusbar .bar{width:3px;border-radius:1px;background:var(--ink-3)}
+.body{flex:1;padding:0 20px;overflow:hidden;display:flex;flex-direction:column}
+
+/* ambient shapes */
+.amb{position:absolute;border-radius:50%;pointer-events:none}
+.amb.one{width:300px;height:300px;right:-130px;top:-90px;background:var(--pine);opacity:.07}
+.amb.two{width:230px;height:230px;left:-120px;top:280px;background:var(--clay);opacity:.07}
+
+/* ---------- shared bits ---------- */
+.eyebrow{font-size:11.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3)}
+.h-display{font-family:var(--display);font-optical-sizing:auto;font-weight:500;letter-spacing:-.02em;line-height:1.1}
+.card{background:var(--surface);border-radius:22px;padding:16px;border:1px solid var(--line-2)}
+.pill{
+  display:inline-flex;align-items:center;gap:7px;border-radius:999px;
+  font-weight:600;font-size:14px;padding:12px 18px;border:none;
+}
+.pill.solid{background:var(--pine);color:#fff}
+.pill.light{background:var(--surface);color:var(--pine)}
+.pill.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.sos{
+  font-size:11px;font-weight:700;letter-spacing:.08em;
+  color:var(--clay);background:var(--clay-soft);border-radius:999px;padding:6px 12px;
+}
+.ico{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.badge{
+  width:44px;height:44px;border-radius:14px;display:grid;place-items:center;flex:none;
+}
+.badge.pine{background:var(--pine-soft);color:var(--pine)}
+.badge.clay{background:var(--clay-soft);color:var(--clay)}
+.badge.sage{background:var(--sage-soft);color:var(--sage)}
+
+/* bottom nav */
+.nav{
+  position:absolute;left:14px;right:14px;bottom:16px;height:66px;
+  background:var(--surface);border-radius:26px;border:1px solid var(--line-2);
+  box-shadow:0 10px 26px -16px rgba(28,43,39,.5);
+  display:flex;align-items:center;justify-content:space-around;padding:0 8px;
+}
+.nav .it{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--ink-3);font-size:10px;font-weight:600}
+.nav .it .wrap{width:42px;height:28px;border-radius:999px;display:grid;place-items:center}
+.nav .it.on{color:var(--pine)}
+.nav .it.on .wrap{background:var(--pine-soft)}
+
+/* ---------- screen 1: sign in ---------- */
+.mark{width:84px;height:84px;border-radius:26px;background:var(--pine);display:grid;place-items:center;position:relative}
+.mark::after{
+  content:"";position:absolute;width:84px;height:84px;border-radius:26px;
+  background:var(--clay);opacity:.28;transform:translate(13px,13px);z-index:-1;
+}
+.field{
+  background:var(--screen);border:1px solid var(--line);border-radius:15px;
+  padding:13px 15px;display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+.field .lab{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.field .val{font-size:15px;color:var(--ink);font-weight:500}
+.field .ph{font-size:15px;color:var(--ink-3)}
+
+/* ---------- mood strip ---------- */
+.moods{display:flex;justify-content:space-between;gap:6px}
+.mood{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1}
+.mood .face{
+  width:50px;height:50px;border-radius:50%;border:1.5px solid var(--line);
+  display:grid;place-items:center;background:var(--screen);
+}
+.mood.sel .face{background:var(--sage-soft);border-color:var(--sage);transform:scale(1.08)}
+.mood .nm{font-size:9.5px;font-weight:600;color:var(--ink-3)}
+.mood.sel .nm{color:var(--sage)}
+
+/* ---------- hero ---------- */
+.hero{
+  border-radius:26px;padding:20px;position:relative;overflow:hidden;
+  background:linear-gradient(145deg,var(--pine) 0%,var(--pine-deep) 100%);color:#fff;
+}
+.hero .ripple{position:absolute;right:-56px;top:-46px;opacity:.26}
+.hero h3{font-family:var(--display);font-weight:500;font-size:23px;margin:0;letter-spacing:-.015em}
+.hero p{margin:6px 0 0;font-size:13px;line-height:1.5;color:rgba(255,255,255,.78)}
+
+/* ---------- quick grid ---------- */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.duo .card{padding:14px;display:flex;flex-direction:column;gap:9px}
+.duo h4{margin:0;font-size:15px;font-weight:700}
+.duo span{font-size:11.5px;color:var(--ink-3);line-height:1.4}
+
+/* ---------- fingerprint row ---------- */
+.fp{display:flex;align-items:center;gap:14px}
+.fp h4{margin:0;font-size:15px;font-weight:700}
+.fp p{margin:3px 0 0;font-size:11.5px;color:var(--ink-3);line-height:1.45}
+
+/* ---------- areas ---------- */
+.area{display:flex;align-items:center;gap:13px;padding:13px 14px}
+.area h4{margin:0;font-size:14.5px;font-weight:700}
+.area p{margin:2px 0 0;font-size:11.5px;color:var(--ink-3);line-height:1.4}
+
+/* ---------- screen 3: sorting ---------- */
+.prog{height:5px;border-radius:999px;background:var(--line-2);overflow:hidden}
+.prog i{display:block;height:100%;border-radius:999px;background:var(--pine);width:33%}
+.item{
+  border-radius:24px;background:var(--surface);border:1px solid var(--line-2);
+  padding:22px 20px;display:flex;flex-direction:column;gap:16px;align-items:center;text-align:center;
+  box-shadow:0 14px 30px -24px rgba(28,43,39,.6);
+}
+.item .art{width:110px;height:110px;border-radius:50%;background:var(--clay-soft);display:grid;place-items:center}
+.item h3{font-family:var(--display);font-weight:500;font-size:21px;margin:0;line-height:1.25;letter-spacing:-.015em}
+.item .sub{font-size:12.5px;color:var(--ink-3);margin:0}
+.choice{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.choice .pill{justify-content:center;padding:15px 0;font-size:15px}
+.scale{display:flex;justify-content:space-between;gap:7px}
+.scale i{flex:1;height:38px;border-radius:12px;background:var(--screen);border:1px solid var(--line);display:grid;place-items:center;font-size:12.5px;font-weight:600;color:var(--ink-3);font-style:normal}
+.scale i.on{background:var(--pine);border-color:var(--pine);color:#fff}
+
+/* ---------- screen 4: report ---------- */
+.legend{display:flex;flex-direction:column;gap:9px}
+.leg{display:flex;align-items:center;gap:10px;font-size:13px}
+.leg .sw{width:9px;height:9px;border-radius:3px;flex:none}
+.leg .nm{flex:1;font-weight:500}
+.leg .lv{font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:999px}
+.lv.hi{background:var(--clay-soft);color:var(--clay)}
+.lv.md{background:var(--pine-soft);color:var(--pine)}
+.lv.lo{background:var(--sage-soft);color:var(--sage)}
+.note{
+  font-size:11px;line-height:1.5;color:var(--ink-3);
+  border-left:2px solid var(--line);padding-left:10px;
+}
+
+/* ---------- spec strip ---------- */
+.spec{max-width:1660px;margin:52px auto 0;border-top:1px solid var(--line);padding-top:32px}
+.spec h2{font-family:var(--display);font-weight:500;font-size:23px;margin:0 0 6px;letter-spacing:-.015em}
+.spec > p{margin:0 0 22px;color:var(--ink-2);font-size:14.5px;max-width:60ch;line-height:1.6}
+.specgrid{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.specgrid section{min-width:0}
+.specgrid h3{font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);margin:0 0 11px}
+.swatches{display:flex;flex-direction:column;gap:7px}
+.sw-row{display:flex;align-items:center;gap:10px;font-size:13px}
+.sw-row b{width:20px;height:20px;border-radius:6px;border:1px solid var(--line);flex:none}
+.sw-row code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:var(--ink-3);margin-left:auto}
+.specgrid ul{margin:0;padding-left:17px;color:var(--ink-2);font-size:13.5px;line-height:1.75}
+.specgrid li::marker{color:var(--ink-3)}
+</style>
+
+<header class="head">
+  <h1>MindPath AI — screen designs</h1>
+  <p>Four screens drawn at phone size: sign in, home, a sorting task, and the result. Calm, muted, patient-facing — no red alerts, no streak that can break, one clear action per screen.</p>
+  <div class="meta">
+    <span class="tag">390 × 812</span>
+    <span class="tag">Fraunces + Hanken Grotesk</span>
+    <span class="tag b">OCD &amp; Hoarding</span>
+  </div>
+</header>
+
+<div class="rail">
+
+  <!-- ================= SCREEN 1 : SIGN IN ================= -->
+  <figure class="phone">
+    <div class="frame">
+      <div class="scr">
+        <div class="amb one"></div>
+        <div class="amb two"></div>
+        <div class="statusbar">
+          <span>9:41</span>
+          <span class="dots">
+            <i class="bar" style="height:7px"></i><i class="bar" style="height:10px"></i>
+            <i class="bar" style="height:13px"></i><i class="bar" style="height:9px;opacity:.35"></i>
+          </span>
+        </div>
+        <div class="body" style="gap:0">
+          <div style="height:38px"></div>
+          <div style="display:flex;flex-direction:column;align-items:flex-start;gap:20px">
+            <div class="mark">
+              <svg width="46" height="46" viewBox="0 0 48 48" aria-hidden="true">
+                <g fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round">
+                  <path d="M6 34a18 18 0 0 1 36 0" opacity=".45"/>
+                  <path d="M13 34a11 11 0 0 1 22 0" opacity=".75"/>
+                  <path d="M20 34a4 4 0 0 1 8 0"/>
+                </g>
+              </svg>
+            </div>
+            <div>
+              <h2 class="h-display" style="font-size:38px;margin:0">MindPath</h2>
+              <p style="margin:9px 0 0;font-size:15px;color:var(--ink-2);line-height:1.55;max-width:250px">A quiet first step for obsessive thoughts and difficulty letting go.</p>
+            </div>
+          </div>
+
+          <div style="height:30px"></div>
+
+          <div class="card" style="padding:14px;display:flex;flex-direction:column;gap:11px">
+            <div class="field">
+              <div>
+                <div class="lab">Email</div>
+                <div class="val">abdul.momin@szabist.pk</div>
+              </div>
+            </div>
+            <div class="field">
+              <div>
+                <div class="lab">Password</div>
+                <div class="val" style="letter-spacing:3px">••••••••••</div>
+              </div>
+              <svg class="ico" viewBox="0 0 24 24" style="color:var(--ink-3)"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="2.6"/></svg>
+            </div>
+            <div style="display:flex;justify-content:flex-end">
+              <span style="font-size:12.5px;font-weight:600;color:var(--pine)">Forgot password?</span>
+            </div>
+          </div>
+
+          <div style="height:18px"></div>
+          <button class="pill solid" style="justify-content:center;padding:16px 0;font-size:15.5px">Log in</button>
+          <div style="height:14px"></div>
+          <div style="text-align:center;font-size:13.5px;color:var(--ink-2)">
+            New here? <span style="color:var(--pine);font-weight:700">Create account</span>
+          </div>
+
+          <div style="flex:1"></div>
+          <p class="note" style="margin:0 0 26px">MindPath gives preliminary screening and self-support. It does not diagnose, and it is not a substitute for a clinician.</p>
+        </div>
+      </div>
+    </div>
+    <figcaption>Sign in</figcaption>
+  </figure>
+
+  <!-- ================= SCREEN 2 : HOME ================= -->
+  <figure class="phone">
+    <div class="frame">
+      <div class="scr">
+        <div class="amb one"></div>
+        <div class="amb two" style="top:420px"></div>
+        <div class="statusbar">
+          <span>9:41</span>
+          <span class="dots">
+            <i class="bar" style="height:7px"></i><i class="bar" style="height:10px"></i>
+            <i class="bar" style="height:13px"></i><i class="bar" style="height:9px;opacity:.35"></i>
+          </span>
+        </div>
+        <div class="body" style="gap:16px">
+
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding-top:6px">
+            <div>
+              <div class="eyebrow">Saturday, 24 October</div>
+              <h2 class="h-display" style="font-size:31px;margin:7px 0 0">Good evening,<br>Abdul</h2>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:9px">
+              <div style="width:40px;height:40px;border-radius:50%;background:var(--pine-soft);color:var(--pine);display:grid;place-items:center;font-weight:700;font-size:15px">A</div>
+              <span class="sos">SOS</span>
+            </div>
+          </div>
+
+          <div class="card" style="padding:15px 14px;display:flex;flex-direction:column;gap:12px">
+            <div style="font-size:14px;font-weight:600">How are you right now?</div>
+            <div class="moods">
+              <div class="mood">
+                <span class="face"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="1.7" stroke-linecap="round"><path d="M8 16.5c1-1.8 2.3-2.7 4-2.7s3 .9 4 2.7"/><path d="M8.5 9.5h.01M15.5 9.5h.01"/></svg></span>
+                <span class="nm">Very low</span>
+              </div>
+              <div class="mood">
+                <span class="face"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="1.7" stroke-linecap="round"><path d="M8.5 15.6c1-.9 2.1-1.4 3.5-1.4s2.5.5 3.5 1.4"/><path d="M8.5 9.5h.01M15.5 9.5h.01"/></svg></span>
+                <span class="nm">Low</span>
+              </div>
+              <div class="mood sel">
+                <span class="face"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--sage)" stroke-width="1.9" stroke-linecap="round"><path d="M8.6 14.8h6.8"/><path d="M8.5 9.5h.01M15.5 9.5h.01"/></svg></span>
+                <span class="nm">Okay</span>
+              </div>
+              <div class="mood">
+                <span class="face"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="1.7" stroke-linecap="round"><path d="M8.5 14c1 .9 2.1 1.4 3.5 1.4s2.5-.5 3.5-1.4"/><path d="M8.5 9.5h.01M15.5 9.5h.01"/></svg></span>
+                <span class="nm">Good</span>
+              </div>
+              <div class="mood">
+                <span class="face"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="1.7" stroke-linecap="round"><path d="M8 13.3c1 1.8 2.3 2.7 4 2.7s3-.9 4-2.7"/><path d="M8.5 9.5h.01M15.5 9.5h.01"/></svg></span>
+                <span class="nm">Great</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero">
+            <svg class="ripple" width="190" height="190" viewBox="0 0 190 190" aria-hidden="true">
+              <g fill="none" stroke="#fff" stroke-width="1.6">
+                <circle cx="95" cy="95" r="30"/><circle cx="95" cy="95" r="48"/>
+                <circle cx="95" cy="95" r="66"/><circle cx="95" cy="95" r="84"/>
+              </g>
+            </svg>
+            <h3>Start your check-in</h3>
+            <p>Five short tasks, about 8 minutes.<br>Pause any time — nothing is lost.</p>
+            <div style="height:16px"></div>
+            <span class="pill light" style="padding:12px 20px">
+              Begin
+              <svg class="ico" viewBox="0 0 24 24" style="width:17px;height:17px"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+            </span>
+          </div>
+
+          <div class="duo">
+            <div class="card">
+              <span class="badge pine">
+                <svg class="ico" viewBox="0 0 24 24"><path d="M12 20c3.9 0 7-2.4 7-5.5S15.9 9 12 9s-7 2.4-7 5.5S8.1 20 12 20Z"/><path d="M12 9V4M9 6l3-2 3 2"/></svg>
+              </span>
+              <div>
+                <h4>Breathe</h4>
+                <span>4 · 7 · 8, two minutes</span>
+              </div>
+            </div>
+            <div class="card">
+              <span class="badge sage">
+                <svg class="ico" viewBox="0 0 24 24"><path d="M12 21V9"/><path d="M12 9c0-3.3 2.7-6 6-6 0 3.3-2.7 6-6 6Z"/><path d="M12 14c0-2.8-2.2-5-5-5 0 2.8 2.2 5 5 5Z"/></svg>
+              </span>
+              <div>
+                <h4>Ground</h4>
+                <span>5 · 4 · 3 · 2 · 1 senses</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card fp">
+            <svg width="54" height="54" viewBox="0 0 54 54" aria-hidden="true" style="flex:none">
+              <circle cx="27" cy="27" r="23" fill="none" stroke="var(--line)" stroke-width="5" stroke-dasharray="3 5" stroke-linecap="round"/>
+              <path d="M27 4a23 23 0 0 1 16.3 6.7" fill="none" stroke="var(--clay)" stroke-width="5" stroke-linecap="round"/>
+            </svg>
+            <div style="min-width:0">
+              <h4>Your Wellness Fingerprint</h4>
+              <p>One check-in done. Two more and your pattern appears.</p>
+            </div>
+          </div>
+
+          <div style="flex:1"></div>
+        </div>
+
+        <nav class="nav">
+          <span class="it on"><span class="wrap"><svg class="ico" viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4v-5h-6v5H5a1 1 0 0 1-1-1Z"/></svg></span>Home</span>
+          <span class="it"><span class="wrap"><svg class="ico" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2.5"/><path d="M9 3.5h6v2.5H9zM9 11h6M9 15h4"/></svg></span>Check-in</span>
+          <span class="it"><span class="wrap"><svg class="ico" viewBox="0 0 24 24"><path d="M12 21V10"/><path d="M12 10c0-3.3 2.7-6 6-6 0 3.3-2.7 6-6 6Z"/><path d="M12 15c0-2.8-2.2-5-5-5 0 2.8 2.2 5 5 5Z"/></svg></span>Therapy</span>
+          <span class="it"><span class="wrap"><svg class="ico" viewBox="0 0 24 24"><path d="M4 19h16M7 16V9M12 16V5M17 16v-4"/></svg></span>Progress</span>
+          <span class="it"><span class="wrap"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.6"/><path d="M5 20c.8-3.5 3.6-5.3 7-5.3s6.2 1.8 7 5.3"/></svg></span>You</span>
+        </nav>
+      </div>
+    </div>
+    <figcaption>Home</figcaption>
+  </figure>
+
+  <!-- ================= SCREEN 3 : SORTING TASK ================= -->
+  <figure class="phone">
+    <div class="frame">
+      <div class="scr">
+        <div class="amb two" style="top:500px;opacity:.06"></div>
+        <div class="statusbar">
+          <span>9:41</span>
+          <span class="dots">
+            <i class="bar" style="height:7px"></i><i class="bar" style="height:10px"></i>
+            <i class="bar" style="height:13px"></i><i class="bar" style="height:9px;opacity:.35"></i>
+          </span>
+        </div>
+        <div class="body" style="gap:0">
+
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0 16px">
+            <svg class="ico" viewBox="0 0 24 24" style="color:var(--ink-2)"><path d="M15 6l-6 6 6 6"/></svg>
+            <span style="font-size:13.5px;font-weight:700">Keep or let go</span>
+            <span style="font-size:12.5px;font-weight:600;color:var(--ink-3)">Skip</span>
+          </div>
+
+          <div class="prog"><i></i></div>
+          <div style="display:flex;justify-content:space-between;margin-top:8px">
+            <span style="font-size:11.5px;color:var(--ink-3);font-weight:600">Item 4 of 12</span>
+            <span style="font-size:11.5px;color:var(--ink-3);font-weight:600">About 2 min left</span>
+          </div>
+
+          <div style="height:26px"></div>
+
+          <div class="item">
+            <span class="art">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none" stroke="var(--clay)" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
+                <rect x="11" y="33" width="34" height="8" rx="2"/>
+                <rect x="14" y="25" width="28" height="8" rx="2"/>
+                <rect x="17" y="17" width="22" height="8" rx="2"/>
+              </svg>
+            </span>
+            <div>
+              <h3>A stack of magazines you haven't opened since 2022</h3>
+              <p class="sub" style="margin-top:9px">Imagine it is in front of you right now.</p>
+            </div>
+            <div class="choice" style="width:100%">
+              <span class="pill ghost" style="justify-content:center">Keep it</span>
+              <span class="pill solid" style="justify-content:center">Let it go</span>
+            </div>
+          </div>
+
+          <div style="height:24px"></div>
+
+          <div class="card" style="padding:15px 14px;display:flex;flex-direction:column;gap:11px">
+            <div style="font-size:13.5px;font-weight:600">How hard was that decision?</div>
+            <div class="scale">
+              <i>0</i><i>1</i><i>2</i><i class="on">3</i><i>4</i>
+            </div>
+            <div style="display:flex;justify-content:space-between">
+              <span style="font-size:10.5px;color:var(--ink-3);font-weight:600">Not at all</span>
+              <span style="font-size:10.5px;color:var(--ink-3);font-weight:600">Extremely</span>
+            </div>
+          </div>
+
+          <div style="flex:1"></div>
+          <p class="note" style="margin:0 0 26px">There is no right answer. We are looking at patterns across all twelve, not at any single choice.</p>
+        </div>
+      </div>
+    </div>
+    <figcaption>Sorting task</figcaption>
+  </figure>
+
+  <!-- ================= SCREEN 4 : REPORT ================= -->
+  <figure class="phone">
+    <div class="frame">
+      <div class="scr">
+        <div class="amb one" style="opacity:.06"></div>
+        <div class="statusbar">
+          <span>9:41</span>
+          <span class="dots">
+            <i class="bar" style="height:7px"></i><i class="bar" style="height:10px"></i>
+            <i class="bar" style="height:13px"></i><i class="bar" style="height:9px;opacity:.35"></i>
+          </span>
+        </div>
+        <div class="body" style="gap:0">
+
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0 18px">
+            <svg class="ico" viewBox="0 0 24 24" style="color:var(--ink-2)"><path d="M15 6l-6 6 6 6"/></svg>
+            <span style="font-size:13.5px;font-weight:700">Your fingerprint</span>
+            <svg class="ico" viewBox="0 0 24 24" style="color:var(--ink-2)"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M5 15v3.5A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V15"/></svg>
+          </div>
+
+          <div class="eyebrow">24 October · check-in 3</div>
+          <h2 class="h-display" style="font-size:25px;margin:8px 0 0">Checking and doubt<br>stand out most.</h2>
+
+          <div style="height:18px"></div>
+
+          <div class="card" style="padding:16px;display:flex;flex-direction:column;gap:16px">
+            <div style="display:grid;place-items:center">
+              <svg width="192" height="118" viewBox="0 0 192 118" aria-hidden="true">
+                <g fill="none" stroke-linecap="round" stroke-width="7">
+                  <path d="M16 110a80 80 0 0 1 160 0" stroke="var(--line-2)"/>
+                  <path d="M30 110a66 66 0 0 1 132 0" stroke="var(--line-2)"/>
+                  <path d="M44 110a52 52 0 0 1 104 0" stroke="var(--line-2)"/>
+                  <path d="M58 110a38 38 0 0 1 76 0" stroke="var(--line-2)"/>
+                  <path d="M72 110a24 24 0 0 1 48 0" stroke="var(--line-2)"/>
+                  <path d="M86 110a10 10 0 0 1 20 0" stroke="var(--line-2)"/>
+
+                  <path d="M16 110a80 80 0 0 1 24-56.6" stroke="var(--clay)"/>
+                  <path d="M30 110a66 66 0 0 1 14.6-41.3" stroke="var(--clay)"/>
+                  <path d="M44 110a52 52 0 0 1 7.7-27.3" stroke="var(--pine)"/>
+                  <path d="M58 110a38 38 0 0 1 4-16.9" stroke="var(--pine)"/>
+                  <path d="M72 110a24 24 0 0 1 1.8-9.2" stroke="var(--sage)"/>
+                  <path d="M86 110a10 10 0 0 1 .5-3.1" stroke="var(--sage)"/>
+                </g>
+              </svg>
+            </div>
+
+            <div class="legend">
+              <div class="leg"><span class="sw" style="background:var(--clay)"></span><span class="nm">Doubt &amp; checking</span><span class="lv hi">High</span></div>
+              <div class="leg"><span class="sw" style="background:var(--clay)"></span><span class="nm">Intrusive thoughts</span><span class="lv hi">High</span></div>
+              <div class="leg"><span class="sw" style="background:var(--pine)"></span><span class="nm">Difficulty discarding</span><span class="lv md">Medium</span></div>
+              <div class="leg"><span class="sw" style="background:var(--pine)"></span><span class="nm">Order &amp; symmetry</span><span class="lv md">Medium</span></div>
+              <div class="leg"><span class="sw" style="background:var(--sage)"></span><span class="nm">Clutter at home</span><span class="lv lo">Low</span></div>
+              <div class="leg"><span class="sw" style="background:var(--sage)"></span><span class="nm">Overall distress</span><span class="lv lo">Low</span></div>
+            </div>
+          </div>
+
+          <div style="height:14px"></div>
+
+          <div class="card area" style="gap:12px">
+            <span class="badge clay">
+              <svg class="ico" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg>
+            </span>
+            <div style="min-width:0">
+              <h4>Suggested next: checking ladder</h4>
+              <p>Start with the easiest step. 10 minutes.</p>
+            </div>
+            <svg class="ico" viewBox="0 0 24 24" style="color:var(--ink-3);width:17px;height:17px;flex:none"><path d="M9 6l6 6-6 6"/></svg>
+          </div>
+
+          <div style="height:12px"></div>
+          <p class="note" style="margin:0 0 26px">AI-assisted preliminary screening, based on your answers and the OCI-R scoring bands. This is not a medical diagnosis.</p>
+        </div>
+      </div>
+    </div>
+    <figcaption>Result</figcaption>
+  </figure>
+
+</div>
+
+<div class="spec">
+  <h2>What makes it work</h2>
+  <p>Hand these tokens and rules to Claude Code and ask it to match the screens exactly, rather than describing the look in prose again.</p>
+  <div class="specgrid">
+    <section>
+      <h3>Palette</h3>
+      <div class="swatches">
+        <div class="sw-row"><b style="background:#F7F8F5"></b>Screen<code>#F7F8F5</code></div>
+        <div class="sw-row"><b style="background:#FFFFFF"></b>Surface<code>#FFFFFF</code></div>
+        <div class="sw-row"><b style="background:#1C2B27"></b>Ink<code>#1C2B27</code></div>
+        <div class="sw-row"><b style="background:#2F5D56"></b>Pine<code>#2F5D56</code></div>
+        <div class="sw-row"><b style="background:#CE8463"></b>Clay<code>#CE8463</code></div>
+        <div class="sw-row"><b style="background:#6F8E76"></b>Sage<code>#6F8E76</code></div>
+      </div>
+    </section>
+    <section>
+      <h3>Type</h3>
+      <ul>
+        <li><b>Fraunces</b> for greetings, questions and results — warm, human, never clinical.</li>
+        <li><b>Hanken Grotesk</b> for everything else: labels, body, buttons, numbers.</li>
+        <li>Display 31 · Title 25 · Body 14 · Caption 11.5. Nothing in between.</li>
+      </ul>
+    </section>
+    <section>
+      <h3>Shape &amp; depth</h3>
+      <ul>
+        <li>Radius 26 on heroes, 22 on cards, 14 on badges, pill on buttons.</li>
+        <li>One soft shadow, tinted green, never grey.</li>
+        <li>Two ambient circles per screen at 7% — depth without clutter.</li>
+        <li>Concentric arcs are the brand motif: a fingerprint, a ripple settling.</li>
+      </ul>
+    </section>
+    <section>
+      <h3>Rules for this app</h3>
+      <ul>
+        <li>No red anywhere except the SOS chip.</li>
+        <li>No notification badges or counters — they feed checking compulsions.</li>
+        <li>No streak that resets to zero; count check-ins instead.</li>
+        <li>Progress is always visible: step X of Y, and time remaining.</li>
+        <li>Every screen has exactly one dominant action.</li>
+      </ul>
+    </section>
+  </div>
+</div>

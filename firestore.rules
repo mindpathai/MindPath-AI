@@ -1,0 +1,56 @@
+rules_version = '2';
+
+// Each signed-in user can read and write only their own data under
+// users/{uid}. Everything else is denied.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isOwner(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+
+    function validProfile(data) {
+      return data.keys().hasOnly(['name', 'email', 'createdAt', 'consent'])
+        && data.name is string
+        && data.name.size() >= 3
+        && data.name.size() <= 50
+        && data.email == request.auth.token.email;
+    }
+
+    // A new or renewed consent record must carry a version, both
+    // agreements, and the server's own timestamp.
+    function validConsent(consent) {
+      return consent is map
+        && consent.keys().hasOnly(
+             ['version', 'acceptedAt', 'isAdult',
+              'understandsScreeningNotDiagnosis'])
+        && consent.version is string
+        && consent.version.size() > 0
+        && consent.acceptedAt == request.time
+        && consent.isAdult == true
+        && consent.understandsScreeningNotDiagnosis == true;
+    }
+
+    // Profile and consent record.
+    match /users/{uid} {
+      allow read, delete: if isOwner(uid);
+
+      allow create: if isOwner(uid)
+        && validProfile(request.resource.data)
+        && request.resource.data.createdAt == request.time
+        && validConsent(request.resource.data.consent);
+
+      // createdAt never changes; consent is either kept as-is or renewed.
+      allow update: if isOwner(uid)
+        && validProfile(request.resource.data)
+        && request.resource.data.createdAt == resource.data.createdAt
+        && (request.resource.data.consent == resource.data.consent
+            || validConsent(request.resource.data.consent));
+
+      // Later per-user data (assessments, progress, history).
+      match /{subcollection}/{path=**} {
+        allow read, write: if isOwner(uid);
+      }
+    }
+  }
+}

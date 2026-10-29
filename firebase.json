@@ -1,0 +1,1 @@
+{"flutter":{"platforms":{"android":{"default":{"projectId":"mindpath-ai-90ebe","appId":"1:1026021485805:android:fe2c1185c24a501cd070e4","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"mindpath-ai-90ebe","configurations":{"android":"1:1026021485805:android:fe2c1185c24a501cd070e4"}}}}},"firestore":{"rules":"firestore.rules"}}

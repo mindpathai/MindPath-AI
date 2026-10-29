@@ -1,0 +1,497 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-26T11:08:17+00:00",
+  "title": "Design System: MindPath AI",
+  "extensions": {
+    "colorMeta": {
+      "still-water-teal": {
+        "role": "primary",
+        "displayName": "Still-Water Teal",
+        "canonical": "oklch(44.3% 0.052 183)",
+        "tonalRamp": [
+          "#080C0B",
+          "#172926",
+          "#264944",
+          "#3D6B64",
+          "#5E8D85",
+          "#88AEA7",
+          "#B8CFCA",
+          "#E9F0EF"
+        ]
+      },
+      "still-water-deep": {
+        "role": "primary",
+        "displayName": "Still-Water Deep",
+        "canonical": "oklch(35.1% 0.043 184)",
+        "tonalRamp": [
+          "#080C0B",
+          "#1A2826",
+          "#2C4844",
+          "#456964",
+          "#668B85",
+          "#8EACA7",
+          "#BBCECA",
+          "#EAF0EF"
+        ]
+      },
+      "still-water-mist": {
+        "role": "primary",
+        "displayName": "Still-Water Mist",
+        "canonical": "oklch(92.7% 0.014 174)",
+        "tonalRamp": [
+          "#0A0B0B",
+          "#222625",
+          "#3C4441",
+          "#5A6461",
+          "#7A8582",
+          "#9EA7A4",
+          "#C5CAC9",
+          "#EDEFEE"
+        ]
+      },
+      "ember-clay": {
+        "role": "secondary",
+        "displayName": "Ember Clay",
+        "canonical": "oklch(68.3% 0.103 45)",
+        "tonalRamp": [
+          "#110906",
+          "#381D10",
+          "#653219",
+          "#904C2C",
+          "#B56D4D",
+          "#D1957A",
+          "#E6C0B0",
+          "#F8ECE6"
+        ]
+      },
+      "ember-clay-wash": {
+        "role": "secondary",
+        "displayName": "Ember Clay Wash",
+        "canonical": "oklch(93.3% 0.024 55)",
+        "tonalRamp": [
+          "#0C0B0A",
+          "#2A2420",
+          "#4A4038",
+          "#6C5E55",
+          "#8E7F75",
+          "#AFA29A",
+          "#CFC7C2",
+          "#F0EEEC"
+        ]
+      },
+      "quiet-sage": {
+        "role": "tertiary",
+        "displayName": "Quiet Sage",
+        "canonical": "oklch(61.6% 0.050 152)",
+        "tonalRamp": [
+          "#090C0A",
+          "#1C281F",
+          "#324837",
+          "#4C6A53",
+          "#6C8B73",
+          "#93AD99",
+          "#BECEC2",
+          "#EBF0EC"
+        ]
+      },
+      "quiet-sage-wash": {
+        "role": "tertiary",
+        "displayName": "Quiet Sage Wash",
+        "canonical": "oklch(93.0% 0.016 143)",
+        "tonalRamp": [
+          "#0B0B0A",
+          "#232623",
+          "#3E443D",
+          "#5C645B",
+          "#7D857C",
+          "#A0A7A0",
+          "#C6CAC6",
+          "#EDEFED"
+        ]
+      },
+      "dusk-periwinkle": {
+        "role": "tertiary",
+        "displayName": "Dusk Periwinkle",
+        "canonical": "oklch(65.5% 0.068 267)",
+        "tonalRamp": [
+          "#090B0F",
+          "#1E2535",
+          "#35415F",
+          "#506088",
+          "#7081AC",
+          "#96A5C8",
+          "#C0C9DF",
+          "#EBEEF5"
+        ]
+      },
+      "morning-screen": {
+        "role": "neutral",
+        "displayName": "Morning Screen",
+        "canonical": "oklch(97.8% 0.004 122)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#252524",
+          "#424240",
+          "#61625F",
+          "#828380",
+          "#A4A5A3",
+          "#C9C9C8",
+          "#EEEEEE"
+        ]
+      },
+      "white-surface": {
+        "role": "neutral",
+        "displayName": "White Surface",
+        "canonical": "oklch(100.0% 0.000 90)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#A5A5A5",
+          "#C9C9C9",
+          "#EEEEEE"
+        ]
+      },
+      "dove-paper": {
+        "role": "neutral",
+        "displayName": "Dove Paper",
+        "canonical": "oklch(93.9% 0.007 132)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#242524",
+          "#41433F",
+          "#60625E",
+          "#81837F",
+          "#A4A6A2",
+          "#C8CAC7",
+          "#EEEEEE"
+        ]
+      },
+      "dove-paper-deep": {
+        "role": "neutral",
+        "displayName": "Dove Paper Deep",
+        "canonical": "oklch(91.3% 0.010 141)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#242623",
+          "#40433F",
+          "#5E635D",
+          "#7F847E",
+          "#A2A6A2",
+          "#C7CAC7",
+          "#EEEFEE"
+        ]
+      },
+      "forest-ink": {
+        "role": "neutral",
+        "displayName": "Forest Ink",
+        "canonical": "oklch(27.4% 0.022 176)",
+        "tonalRamp": [
+          "#0A0C0B",
+          "#202725",
+          "#394542",
+          "#556561",
+          "#758782",
+          "#9AA9A5",
+          "#C3CBC9",
+          "#ECEFEE"
+        ]
+      },
+      "moss-ink": {
+        "role": "neutral",
+        "displayName": "Moss Ink",
+        "canonical": "oklch(42.0% 0.021 173)",
+        "tonalRamp": [
+          "#0A0C0B",
+          "#202724",
+          "#394541",
+          "#56655F",
+          "#768780",
+          "#9BA9A3",
+          "#C3CBC8",
+          "#ECEFEE"
+        ]
+      },
+      "lichen-ink": {
+        "role": "neutral",
+        "displayName": "Lichen Ink",
+        "canonical": "oklch(51.9% 0.018 171)",
+        "tonalRamp": [
+          "#0A0B0B",
+          "#212624",
+          "#3B4440",
+          "#58645F",
+          "#798680",
+          "#9DA8A3",
+          "#C4CBC8",
+          "#EDEFEE"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "oklch(90.0% 0.011 150)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#232624",
+          "#3F433F",
+          "#5D635E",
+          "#7E847F",
+          "#A1A7A2",
+          "#C7CAC7",
+          "#EEEFEE"
+        ]
+      },
+      "hairline-faint": {
+        "role": "neutral",
+        "displayName": "Hairline Faint",
+        "canonical": "oklch(94.1% 0.009 146)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#242624",
+          "#404340",
+          "#5E635E",
+          "#7F847F",
+          "#A2A6A2",
+          "#C7CAC7",
+          "#EEEFEE"
+        ]
+      },
+      "edge": {
+        "role": "neutral",
+        "displayName": "Edge",
+        "canonical": "oklch(64.7% 0.014 165)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#232624",
+          "#3F433F",
+          "#5D635E",
+          "#7E847F",
+          "#A1A7A2",
+          "#C7CAC7",
+          "#EEEFEE"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "brand": {
+        "displayName": "Brand",
+        "purpose": "The MindPath AI name on sign-in and welcome only."
+      },
+      "display": {
+        "displayName": "Display",
+        "purpose": "Greetings."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Result headlines and screen titles."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card headlines and task questions."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Explanatory sentence under a headline; long text in cards."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Standard text; 600 for row titles."
+      },
+      "small": {
+        "displayName": "Small",
+        "purpose": "Card captions, links, secondary rows."
+      },
+      "button": {
+        "displayName": "Button",
+        "purpose": "Pill labels (15px on full-width submits)."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Footnotes, notes, timing lines in Lichen Ink."
+      },
+      "label": {
+        "displayName": "Field Label",
+        "purpose": "Uppercase labels floating inside fields."
+      },
+      "eyebrow": {
+        "displayName": "Eyebrow",
+        "purpose": "Uppercase date and section lines."
+      },
+      "tag": {
+        "displayName": "Tag",
+        "purpose": "SOS chip and level tags, uppercase."
+      }
+    },
+    "shadows": [
+      {
+        "name": "soft-float",
+        "value": "0 18px 40px -22px rgba(28,43,39,.45), 0 2px 6px -2px rgba(28,43,39,.10)",
+        "purpose": "The only shadow: floating nav bar and the sorting-task item card. Ink-tinted, never grey."
+      }
+    ],
+    "motion": [
+      {
+        "name": "state",
+        "value": "240ms cubic-bezier(0.33, 1, 0.68, 1)",
+        "purpose": "Every state change (easeOutCubic). No bounce or spring."
+      },
+      {
+        "name": "press",
+        "value": "120ms, scale 0.97",
+        "purpose": "Press-down feedback on tappable cards and buttons."
+      },
+      {
+        "name": "selected",
+        "value": "scale 1.08",
+        "purpose": "The selected mood face."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "content-max",
+        "value": "440px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Pill",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The screen's one dominant action.",
+      "html": "<button class=\"ds-pill\">Continue <svg width=\"17\" height=\"17\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></button>",
+      "css": ".ds-pill { display:inline-flex; align-items:center; gap:7px; background:#2F5D56; color:#FFFFFF; font-family:'Hanken Grotesk',system-ui,sans-serif; font-size:14px; font-weight:600; padding:12px 18px; border:none; border-radius:999px; cursor:pointer; transition:transform 120ms cubic-bezier(0.33,1,0.68,1), background 240ms cubic-bezier(0.33,1,0.68,1); } .ds-pill:hover { background:#1E423D; } .ds-pill:active { transform:scale(0.97); } .ds-pill:focus-visible { outline:2px solid #2F5D56; outline-offset:3px; } .ds-pill:disabled { background:#E8EDE8; color:#5F6C67; cursor:default; }"
+    },
+    {
+      "name": "Ghost Pill",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary action next to or below the primary pill.",
+      "html": "<button class=\"ds-pill-ghost\">Not now</button>",
+      "css": ".ds-pill-ghost { background:transparent; color:#1C2B27; font-family:'Hanken Grotesk',system-ui,sans-serif; font-size:14px; font-weight:600; padding:12px 18px; border:1.5px solid #D9E0DA; border-radius:999px; cursor:pointer; transition:transform 120ms cubic-bezier(0.33,1,0.68,1), border-color 240ms cubic-bezier(0.33,1,0.68,1); } .ds-pill-ghost:hover { border-color:#5F6C67; } .ds-pill-ghost:active { transform:scale(0.97); } .ds-pill-ghost:focus-visible { outline:2px solid #2F5D56; outline-offset:3px; }"
+    },
+    {
+      "name": "SOS Chip",
+      "kind": "chip",
+      "refersTo": "chip-sos",
+      "description": "Opens the Safety screen; the only chip. Clay-wash pill with Forest Ink text, no red.",
+      "html": "<button class=\"ds-sos\" aria-label=\"SOS, get help now\">SOS</button>",
+      "css": ".ds-sos { background:#F6E5DA; color:#1C2B27; font-family:'Hanken Grotesk',system-ui,sans-serif; font-size:11.5px; font-weight:700; letter-spacing:0.08em; padding:6px 12px; border:none; border-radius:999px; cursor:pointer; transition:transform 120ms cubic-bezier(0.33,1,0.68,1); } .ds-sos:active { transform:scale(0.97); } .ds-sos:focus-visible { outline:2px solid #CE8463; outline-offset:3px; }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Screen-coloured box with the uppercase label floating inside.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field-label\">EMAIL</span><input class=\"ds-field-input\" type=\"email\" value=\"sara@example.com\"></label>",
+      "css": ".ds-field { display:flex; flex-direction:column; gap:3px; background:#F7F8F5; border:1px solid #87918C; border-radius:15px; padding:9px 15px 11px; width:300px; transition:border-color 240ms cubic-bezier(0.33,1,0.68,1); } .ds-field:focus-within { border:1.5px solid #2F5D56; padding:8.5px 14.5px 10.5px; } .ds-field-label { font-family:'Hanken Grotesk',system-ui,sans-serif; font-size:11.5px; font-weight:600; letter-spacing:0.06em; color:#5F6C67; } .ds-field-input { border:none; background:transparent; outline:none; padding:0; font-family:'Hanken Grotesk',system-ui,sans-serif; font-size:15px; font-weight:500; color:#1C2B27; caret-color:#2F5D56; }"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "White, 22px radius, hairline border, no shadow.",
+      "html": "<div class=\"ds-card\"><div class=\"ds-card-title\">How are you right now?</div><div class=\"ds-card-body\">There is no right answer.</div></div>",
+      "css": ".ds-card { background:#FFFFFF; border:1px solid #E8EDE8; border-radius:22px; padding:16px; width:300px; transition:transform 120ms cubic-bezier(0.33,1,0.68,1); } .ds-card:active { transform:scale(0.97); } .ds-card-title { font-family:'Hanken Grotesk',system-ui,sans-serif; font-size:14px; font-weight:600; color:#1C2B27; margin-bottom:4px; } .ds-card-body { font-family:'Hanken Grotesk',system-ui,sans-serif; font-size:13.5px; color:#42514C; }"
+    },
+    {
+      "name": "Row Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Icon badge, title and caption, chevron: condition areas and list rows.",
+      "html": "<button class=\"ds-row\"><span class=\"ds-badge\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 8l8-4 8 4v8l-8 4-8-4z\"/><path d=\"M4 8l8 4 8-4M12 12v8\"/></svg></span><span class=\"ds-row-text\"><span class=\"ds-row-title\">Hoarding Disorder</span><span class=\"ds-row-cap\">Difficulty discarding possessions</span></span><svg class=\"ds-row-chev\" width=\"17\" height=\"17\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 6l6 6-6 6\"/></svg></button>",
+      "css": ".ds-row { display:flex; align-items:center; gap:12px; width:320px; text-align:left; background:#FFFFFF; border:1px solid #E8EDE8; border-radius:22px; padding:16px; cursor:pointer; transition:transform 120ms cubic-bezier(0.33,1,0.68,1); } .ds-row:active { transform:scale(0.97); } .ds-row:focus-visible { outline:2px solid #2F5D56; outline-offset:3px; } .ds-badge { width:44px; height:44px; flex:none; display:grid; place-items:center; background:#DEEAE6; color:#2F5D56; border-radius:14px; } .ds-row-text { display:flex; flex-direction:column; gap:2px; flex:1; } .ds-row-title { font-family:'Hanken Grotesk',system-ui,sans-serif; font-size:14px; font-weight:600; color:#1C2B27; } .ds-row-cap { font-family:'Hanken Grotesk',system-ui,sans-serif; font-size:11.5px; color:#5F6C67; } .ds-row-chev { color:#5F6C67; flex:none; }"
+    },
+    {
+      "name": "Check-in Hero",
+      "kind": "custom",
+      "refersTo": "card-hero",
+      "description": "Teal gradient hero with the ripple motif and a light pill; home's dominant action.",
+      "html": "<div class=\"ds-hero\"><svg class=\"ds-ripple\" width=\"190\" height=\"190\" viewBox=\"0 0 190 190\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"1.4\"><circle cx=\"95\" cy=\"95\" r=\"30\" opacity=\".22\"/><circle cx=\"95\" cy=\"95\" r=\"55\" opacity=\".16\"/><circle cx=\"95\" cy=\"95\" r=\"80\" opacity=\".1\"/></svg><div class=\"ds-hero-title\">Start your check-in</div><div class=\"ds-hero-sub\">Five short tasks, about 8 minutes.<br>Pause any time — nothing is lost.</div><button class=\"ds-pill-light\">Begin</button></div>",
+      "css": ".ds-hero { position:relative; overflow:hidden; width:320px; padding:20px; border-radius:26px; background:linear-gradient(145deg,#2F5D56,#1E423D); } .ds-ripple { position:absolute; right:-56px; top:-46px; } .ds-hero-title { position:relative; font-family:'Fraunces',Georgia,serif; font-size:23px; font-weight:500; line-height:1.25; letter-spacing:-0.015em; color:#FFFFFF; } .ds-hero-sub { position:relative; margin:6px 0 16px; font-family:'Hanken Grotesk',system-ui,sans-serif; font-size:13.5px; line-height:1.5; color:rgba(255,255,255,.78); } .ds-pill-light { position:relative; background:#FFFFFF; color:#2F5D56; font-family:'Hanken Grotesk',system-ui,sans-serif; font-size:14px; font-weight:600; padding:12px 20px; border:none; border-radius:999px; cursor:pointer; transition:transform 120ms cubic-bezier(0.33,1,0.68,1); } .ds-pill-light:active { transform:scale(0.97); } .ds-pill-light:focus-visible { outline:2px solid #FFFFFF; outline-offset:3px; }"
+    },
+    {
+      "name": "Floating Nav",
+      "kind": "nav",
+      "refersTo": "nav-bar",
+      "description": "Inset white bar with the single soft shadow; active icon on a mist pill; no badges.",
+      "html": "<nav class=\"ds-nav\"><button class=\"ds-tab ds-tab-on\"><span class=\"ds-tab-pill\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 11l8-7 8 7v9H4z\"/></svg></span>Home</button><button class=\"ds-tab\"><span class=\"ds-tab-pill\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 19V9M10 19V5M16 19v-7M22 19H2\"/></svg></span>Progress</button><button class=\"ds-tab\"><span class=\"ds-tab-pill\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"8\" r=\"4\"/><path d=\"M4 21c1-4 4-6 8-6s7 2 8 6\"/></svg></span>Profile</button></nav>",
+      "css": ".ds-nav { display:flex; width:340px; height:66px; padding:0 8px; background:#FFFFFF; border:1px solid #E8EDE8; border-radius:26px; box-shadow:0 18px 40px -22px rgba(28,43,39,.45), 0 2px 6px -2px rgba(28,43,39,.10); } .ds-tab { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; background:none; border:none; cursor:pointer; color:#5F6C67; font-family:'Hanken Grotesk',system-ui,sans-serif; font-size:11.5px; font-weight:600; transition:color 240ms cubic-bezier(0.33,1,0.68,1); } .ds-tab:hover { color:#42514C; } .ds-tab:focus-visible { outline:2px solid #2F5D56; outline-offset:-4px; border-radius:26px; } .ds-tab-pill { width:42px; height:28px; display:grid; place-items:center; border-radius:999px; transition:background 240ms cubic-bezier(0.33,1,0.68,1); } .ds-tab-on { color:#2F5D56; } .ds-tab-on .ds-tab-pill { background:#DEEAE6; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Settling Ripple",
+    "overview": "MindPath AI is built around the moment after a disturbance, when the water goes still again. Someone arrives worried that something might be wrong. The interface doesn't reflect that agitation back at them. It takes it in and lets it settle. Concentric arcs are the visible form of this idea: they rise in the logo mark, spread outward on the check-in hero, and come back in the result chart. Everything else stays still enough for those arcs to carry the meaning.\n\nThe mood is gentle, grounded and honest. Gentle: muted greens and earth tones on a pale, slightly green-tinted screen, with warm Fraunces serif headlines that read as a person speaking, not a clinic. Grounded: one spacing scale, one motion curve, one shadow, one main action per screen. Nothing improvised. Honest: progress is always visible, results come with their level and limits, and warmth is never used to blur what a number means.\n\nThe interface is designed for a single phone column (390 × 812 reference, max content width 440px). Screens are sparse on purpose. A typical screen has a greeting or question in Fraunces, two or three white cards, and one solid teal pill. Light mode only for now: `themeMode` is fixed to light. Dark values exist in `docs/mindpath-screens.html` but are not implemented in the app.",
+    "keyCharacteristics": [
+      "Concentric arcs are the only brand motif (logo, hero ripple, result chart).",
+      "Pale sage screen with white cards, hairline borders, and almost no shadow.",
+      "Fraunces for human moments, Hanken Grotesk for everything functional.",
+      "One dominant action per screen; tactile press feedback, never loud.",
+      "No red, no badges, no counters, no breakable streaks."
+    ],
+    "rules": [
+      {
+        "name": "The No-Red Rule",
+        "body": "Red does not exist in this app. Errors, high levels and the SOS chip use the Ember Clay family. Alarm colours feed exactly the anxiety the product is trying to settle.",
+        "section": "colors"
+      },
+      {
+        "name": "The Closed Palette Rule",
+        "body": "`lib/theme/app_colors.dart` holds every colour the app may use. A new colour needs a role in this document first. Opacity variants of existing tokens (the 7% ambient circles, the 78% white hero subtext) are the only allowed derivations.",
+        "section": "colors"
+      },
+      {
+        "name": "The Ink-Not-Grey Rule",
+        "body": "Shadows and tints come from Forest Ink, never neutral grey or black.",
+        "section": "colors"
+      },
+      {
+        "name": "The Eight Sizes Rule",
+        "body": "Only 38, 31, 25, 23, 15, 14, 13.5 and 11.5 exist. Nothing in between. Material's `TextTheme` is mapped onto these so stock widgets stay on the scale.",
+        "section": "typography"
+      },
+      {
+        "name": "The Who's-Speaking Rule",
+        "body": "Fraunces is for greetings, questions and result headlines: moments where the app speaks to the person. Labels, data, buttons and numbers are always Hanken Grotesk.",
+        "section": "typography"
+      },
+      {
+        "name": "The One-Action Rule",
+        "body": "Every screen has exactly one dominant action: one solid teal pill, or the light pill on the hero. Everything else is ghost, link, or card tap.",
+        "section": "layout"
+      },
+      {
+        "name": "The Always-Visible Progress Rule",
+        "body": "Any multi-step task shows \"Item X of Y\" and the time remaining under a 5px progress bar. The user never wonders how much is left.",
+        "section": "layout"
+      },
+      {
+        "name": "The One-Shadow Rule",
+        "body": "There is one shadow, tinted with Forest Ink. If a new element seems to need depth, it is either floating (and gets this shadow) or it isn't (and gets a hairline border).",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do take every colour, size, gap and radius from `lib/theme/` (`AppColors`, `AppTypography`, `AppSpace`, `AppRadius`, `AppSizes`, `AppShadows`, `AppMotion`). These files say \"use only these\" for a reason.",
+      "Do give each screen exactly one solid Still-Water Teal pill (or the light pill on the hero).",
+      "Do use the single motion pairing: 240ms `easeOutCubic` for state changes, 120ms press to 0.97 for touch. No bounce, no spring.",
+      "Do show \"Item X of Y\" and time remaining on every multi-step task.",
+      "Do use Fraunces only where the app speaks to the person (greetings, questions, result headlines).",
+      "Do keep tap targets at 48px or more, even when the visible element is smaller.",
+      "Do reuse the concentric-arc motif for brand moments instead of inventing new ornament."
+    ],
+    "donts": [
+      "Don't use red anywhere. Errors, high levels and SOS use the Ember Clay family.",
+      "Don't add notification badges or counters. They feed checking compulsions.",
+      "Don't show a streak that can reset to zero. Count check-ins instead.",
+      "Don't add shadows to cards. The soft float is only for the nav bar and the sorting item card.",
+      "Don't introduce type sizes outside 38 / 31 / 25 / 23 / 15 / 14 / 13.5 / 11.5.",
+      "Don't set readable text in Ember Clay or Quiet Sage at caption size, including on their washes. Pair the tone with Forest Ink or Moss Ink text instead.",
+      "Don't use filled or third-party icon sets. Icons are 1.6-stroke line glyphs from `line_icon.dart`.",
+      "Don't place more than one dominant action on a screen."
+    ]
+  }
+}

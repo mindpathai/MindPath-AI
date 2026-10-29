@@ -1,0 +1,221 @@
+{
+  "seed": 42,
+  "near_duplicate_threshold": 8,
+  "sets": {
+    "hinder-2025": {
+      "files": 1800,
+      "per_cir": {
+        "1": 200,
+        "2": 200,
+        "3": 200,
+        "4": 200,
+        "5": 200,
+        "6": 200,
+        "7": 200,
+        "8": 200,
+        "9": 200
+      },
+      "unreadable": [],
+      "with_decoder_warnings": 0,
+      "formats": {
+        "JPEG": 1798,
+        "MPO": 2
+      },
+      "modes": {
+        "RGB": 1800
+      },
+      "exif_rotated": 0,
+      "size_mb_total": 469.8,
+      "width": {
+        "min": 173,
+        "p5": 327,
+        "median": 980,
+        "p95": 1920,
+        "max": 2400
+      },
+      "height": {
+        "min": 150,
+        "p5": 256,
+        "median": 768,
+        "p95": 1200,
+        "max": 2844
+      },
+      "short_side": {
+        "min": 150,
+        "p5": 253,
+        "median": 736,
+        "p95": 1200,
+        "max": 1600
+      },
+      "short_side_below_224": 36,
+      "short_side_below_384": 383,
+      "portrait": 206,
+      "landscape": 1574,
+      "square": 20,
+      "distinct_resolutions": 804,
+      "names_not_matching_pattern": 0,
+      "name_level_differs_from_folder": 0,
+      "repeated_photo_ids": 0,
+      "extension_differs_from_format": 0,
+      "exact_duplicate_groups": 0,
+      "exact_duplicate_extra_files": 0,
+      "exact_groups_with_conflicting_cir": 0,
+      "near_pairs_within": 0,
+      "near_pairs_within_not_identical": 0,
+      "near_pairs_within_conflicting_cir": 0
+    },
+    "hinder-2018": {
+      "files": 1323,
+      "per_cir": {
+        "1": 128,
+        "2": 163,
+        "3": 127,
+        "4": 107,
+        "5": 156,
+        "6": 191,
+        "7": 225,
+        "8": 129,
+        "9": 97
+      },
+      "unreadable": [],
+      "with_decoder_warnings": 0,
+      "formats": {
+        "JPEG": 1315,
+        "MPO": 5,
+        "PNG": 2,
+        "GIF": 1
+      },
+      "modes": {
+        "RGB": 1320,
+        "RGBA": 2,
+        "P": 1
+      },
+      "exif_rotated": 1,
+      "size_mb_total": 552.8,
+      "width": {
+        "min": 173,
+        "p5": 300,
+        "median": 640,
+        "p95": 3072,
+        "max": 5472
+      },
+      "height": {
+        "min": 150,
+        "p5": 232,
+        "median": 480,
+        "p95": 2592,
+        "max": 5312
+      },
+      "short_side": {
+        "min": 150,
+        "p5": 226,
+        "median": 480,
+        "p95": 2448,
+        "max": 3648
+      },
+      "short_side_below_224": 48,
+      "short_side_below_384": 454,
+      "portrait": 171,
+      "landscape": 1132,
+      "square": 20,
+      "distinct_resolutions": 866,
+      "names_not_matching_pattern": 0,
+      "name_level_differs_from_folder": 0,
+      "repeated_photo_ids": 0,
+      "extension_differs_from_format": 3,
+      "exact_duplicate_groups": 0,
+      "exact_duplicate_extra_files": 0,
+      "exact_groups_with_conflicting_cir": 0,
+      "near_pairs_within": 1,
+      "near_pairs_within_not_identical": 1,
+      "near_pairs_within_conflicting_cir": 0
+    }
+  },
+  "hinder_2018_vs_2025": {
+    "photo_ids_shared": 1135,
+    "by_status": {
+      "identical file in 2025": 919,
+      "same photo, re-encoded, in 2025": 223,
+      "not in 2025": 181
+    },
+    "by_cir": {
+      "1": {
+        "identical file in 2025": 109,
+        "same photo, re-encoded, in 2025": 17,
+        "not in 2025": 2
+      },
+      "2": {
+        "identical file in 2025": 129,
+        "same photo, re-encoded, in 2025": 32,
+        "not in 2025": 2
+      },
+      "3": {
+        "identical file in 2025": 91,
+        "same photo, re-encoded, in 2025": 22,
+        "not in 2025": 14
+      },
+      "4": {
+        "identical file in 2025": 72,
+        "same photo, re-encoded, in 2025": 18,
+        "not in 2025": 17
+      },
+      "5": {
+        "identical file in 2025": 86,
+        "same photo, re-encoded, in 2025": 35,
+        "not in 2025": 35
+      },
+      "6": {
+        "identical file in 2025": 114,
+        "same photo, re-encoded, in 2025": 34,
+        "not in 2025": 43
+      },
+      "7": {
+        "identical file in 2025": 163,
+        "same photo, re-encoded, in 2025": 28,
+        "not in 2025": 34
+      },
+      "8": {
+        "identical file in 2025": 87,
+        "same photo, re-encoded, in 2025": 18,
+        "not in 2025": 24
+      },
+      "9": {
+        "identical file in 2025": 68,
+        "same photo, re-encoded, in 2025": 19,
+        "not in 2025": 10
+      }
+    },
+    "independent_test_images_by_cir": {
+      "1": 2,
+      "2": 2,
+      "3": 14,
+      "4": 17,
+      "5": 35,
+      "6": 43,
+      "7": 34,
+      "8": 24,
+      "9": 10
+    },
+    "train_images_not_in_2018": 659,
+    "shared_photos_cir_change_2025_minus_2018": {
+      "-2": 1,
+      "-1": 32,
+      "0": 950,
+      "1": 132,
+      "2": 17,
+      "3": 3
+    },
+    "shared_photo_id_but_phash_far": [
+      "CIR_2_ca37910e.jpg (pHash distance 34)"
+    ],
+    "near_duplicate_with_different_photo_id": [
+      "2018 CIR 2/CIR_2_c4c7a79c.jpg ~ 2025 CIR 2/CIR_2_c4c7a7dc.jpg (d=0)",
+      "2018 CIR 2/CIR_2_d4c935fe.jpg ~ 2025 CIR 2/CIR_2_d4c937fe.jpg (d=2)",
+      "2018 CIR 3/CIR_3_98be5207.jpg ~ 2025 CIR 4/CIR_4_98be7207.jpg (d=4)",
+      "2018 CIR 4/CIR_4_845aefb2.jpg ~ 2025 CIR 3/CIR_3_a45aefb2.jpg (d=6)",
+      "2018 CIR 7/CIR_7_9669941e.jpg ~ 2025 CIR 7/CIR_7_9669161e.jpg (d=2)",
+      "2018 CIR 7/CIR_7_b2b495b2.jpg ~ 2025 CIR 8/CIR_8_b2bc94b2.jpg (d=2)",
+      "2018 CIR 8/CIR_8_e62b0145.jpg ~ 2025 CIR 8/CIR_8_c62b01dd.jpg (d=6)"
+    ]
+  }
+}

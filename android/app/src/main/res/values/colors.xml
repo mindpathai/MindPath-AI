@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Morning Screen (AppColors.screen). The app is light-only, so the
+         launch window uses it in dark mode too, avoiding a black flash. -->
+    <color name="screen">#F7F8F5</color>
+</resources>
