@@ -178,7 +178,7 @@ class _ArcChartPainter extends CustomPainter {
   bool shouldRepaint(_ArcChartPainter old) => old.bands != bands;
 }
 
-/// The Wellness Fingerprint ring: a dashed track with a clay arc from
+/// The Wellness Fingerprint ring: a dashed track with a sage arc from
 /// the top for [value] (0 to 1).
 class FingerprintRing extends StatelessWidget {
   const FingerprintRing({super.key, required this.value});
@@ -231,7 +231,7 @@ class _FingerprintRingPainter extends CustomPainter {
         -math.pi / 2,
         2 * math.pi * value.clamp(0.0, 1.0),
         false,
-        stroke(AppColors.clay),
+        stroke(AppColors.sage),
       );
     }
   }

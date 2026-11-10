@@ -78,7 +78,9 @@ Android app in `lib/`.
 | `MockAuthService` | `lib/services/mock_auth_service.dart` | Built, used by tests |
 | Dashboard | `lib/screens/home_screen.dart` | UI built; check-in count and mood are not saved |
 | Assessment ("Keep or let go") and Report | `lib/screens/assessment_screen.dart`, `report_screen.dart` | UI with sample data only |
-| Therapy, Progress, History, Chat, Profile | `lib/screens/` | Placeholder screens |
+| Therapy, Progress, History, Chat | `lib/screens/` | Placeholder screens, hidden from the UI by `lib/features.dart` until their modules ship |
+| Profile ("You" tab) | `lib/screens/profile_screen.dart` | Built: name, email and Log out |
+| Safety (SOS) | `lib/screens/safety_screen.dart` | Built: Pakistan emergency and mental-health helpline numbers |
 | On-device scoring for OCI-R and SI-R | `lib/scoring/` | Planned; folder is empty |
 
 The scoring engine is meant to run on the phone so the validated instrument score works
@@ -144,8 +146,9 @@ sequenceDiagram
     S->>A: updateDisplayName(name)
     S->>F: set users/{uid} (profile + consent)
     alt write succeeds
+        S->>A: signOut
         S-->>R: AppUser
-        R->>U: Go to dashboard
+        R->>U: Go to Login with "Account created" message
     else name or write fails
         S->>A: delete the new account
         S-->>R: error
@@ -160,7 +163,8 @@ sequenceDiagram
    same error type the mock uses, so the screen shows one generic message.
 3. After 5 failures in a row the Login screen locks for 30 seconds (`LoginThrottle`).
    Firebase also applies its own server-side limit.
-4. On success, the router's sign-in guard lets the user into the app.
+4. On success, the router's sign-in guard lets the user into the app. This is the only way
+   in after registering: `signUp` leaves the user signed out.
 
 On app start, `FirebaseAuthService` restores the previous session from Firebase Auth.
 

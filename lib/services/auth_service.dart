@@ -65,6 +65,8 @@ class AuthOffline implements Exception {
 abstract class AuthService extends ChangeNotifier {
   AppUser? get currentUser;
 
+  /// Creates the account and leaves the user signed out, so they have to log
+  /// in with their new credentials before reaching the app.
   Future<AppUser> signUp({
     required String name,
     required String email,

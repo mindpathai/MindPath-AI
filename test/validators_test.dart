@@ -32,6 +32,25 @@ void main() {
     });
   });
 
+  test('normalizeName trims and collapses inner spaces', () {
+    expect(normalizeName('  Ali    Khan  '), 'Ali Khan');
+    expect(normalizeName('Ali\tKhan'), 'Ali Khan');
+  });
+
+  test('password edges: spaces at either end, and the length cap', () {
+    expect(
+      validatePassword(' Blue!River9'),
+      'Password cannot start or end with a space',
+    );
+    expect(
+      validatePassword('Blue!River9 '),
+      'Password cannot start or end with a space',
+    );
+    expect(validatePassword('Blue! River9'), isNull); // inner space is fine
+    expect(validatePassword('Aa1!' * 32), isNull); // 128 characters
+    expect(validatePassword('Aa1!' * 32 + 'x'), isNotNull);
+  });
+
   group('validateEmail', () {
     test('accepts valid emails, trimmed and case-insensitive', () {
       for (final email in [
@@ -72,6 +91,45 @@ void main() {
       final long = '${'a' * 60}@${'${'b' * 60}.' * 4}com';
       expect(long.length, greaterThan(254));
       expect(validateEmail(long), isNotNull);
+    });
+  });
+
+  group('validateEmail on Register (checkTypos)', () {
+    test('rejects the three malformed examples', () {
+      for (final email in ['abc@gmial.com', 'abc@gmail', 'notanemail']) {
+        expect(
+          validateEmail(email, checkTypos: true),
+          isNotNull,
+          reason: email,
+        );
+      }
+    });
+
+    test('suggests the intended provider for a misspelt domain', () {
+      expect(
+        validateEmail('abc@gmial.com', checkTypos: true),
+        'Please check the spelling. Did you mean abc@gmail.com?',
+      );
+      expect(
+        validateEmail(' Sara@Hotmial.com ', checkTypos: true),
+        'Please check the spelling. Did you mean sara@hotmail.com?',
+      );
+    });
+
+    test('uses one plain message for bad formats', () {
+      for (final email in ['abc@gmail', 'notanemail', 'a@b.c', '@x.com']) {
+        expect(validateEmail(email), kInvalidEmailMessage, reason: email);
+      }
+    });
+
+    test('Login does not check typos, so any existing account signs in', () {
+      expect(validateEmail('abc@gmial.com'), isNull);
+    });
+
+    test('accepts real providers and other domains', () {
+      for (final email in ['abc@gmail.com', 'x@szabist.edu.pk', 'y@gmx.com']) {
+        expect(validateEmail(email, checkTypos: true), isNull, reason: email);
+      }
     });
   });
 

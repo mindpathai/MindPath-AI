@@ -230,7 +230,7 @@ rule-based scoring runs on-device) and sent here as-is. The server does not chan
 
 ### `POST /v1/reports`
 
-Turns a screening response into the content of the Report screen ("Your fingerprint").
+Turns a screening response into the content of the Report screen ("Your results").
 
 **Request** - JSON: the full response body of `POST /v1/screenings`.
 
@@ -238,7 +238,7 @@ Turns a screening response into the content of the Report screen ("Your fingerpr
 
 ```json
 {
-  "title": "Your fingerprint",
+  "title": "Your results",
   "generated_at": "2026-10-27T12:00:05Z",
   "headline": "Checking and doubt stand out most.",
   "dimensions": [

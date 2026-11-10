@@ -46,7 +46,6 @@ class MockAuthService extends AuthService {
 
     final user = AppUser(name: normalizeName(name), email: key);
     _users[key] = (user: user, password: password);
-    _setCurrent(user);
     return user;
   }
 

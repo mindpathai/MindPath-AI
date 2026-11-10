@@ -10,7 +10,7 @@ void main() {
 
     setUp(() => auth = MockAuthService(delay: Duration.zero));
 
-    test('signs up, signs out and signs back in', () async {
+    test('signs up signed out, then signs in and out', () async {
       final user = await auth.signUp(
         name: ' Ali Khan ',
         email: 'Ali@Example.com',
@@ -18,13 +18,13 @@ void main() {
       );
       expect(user.email, 'ali@example.com');
       expect(user.firstName, 'Ali');
-      expect(auth.currentUser, user);
-
-      await auth.signOut();
       expect(auth.currentUser, isNull);
 
       await auth.signIn(email: 'ali@example.com ', password: 'Blue!River9');
       expect(auth.currentUser?.name, 'Ali Khan');
+
+      await auth.signOut();
+      expect(auth.currentUser, isNull);
     });
 
     test('throws typed errors', () async {

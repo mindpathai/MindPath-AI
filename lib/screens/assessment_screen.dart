@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:mindpath_ai/features.dart';
 import 'package:mindpath_ai/routes/app_router.dart';
 import 'package:mindpath_ai/theme/app_colors.dart';
 import 'package:mindpath_ai/theme/app_tokens.dart';
@@ -13,7 +14,7 @@ import 'package:mindpath_ai/widgets/line_icon.dart';
 import 'package:mindpath_ai/widgets/press_scale.dart';
 import 'package:mindpath_ai/widgets/task_progress.dart';
 
-/// Check-in tab. Placeholder version of the "Keep or let go" sorting task:
+/// Questions tab. Placeholder version of the "Keep or let go" sorting task:
 /// one sample item, no scoring yet.
 class AssessmentScreen extends StatefulWidget {
   const AssessmentScreen({super.key});
@@ -37,8 +38,8 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
     return Scaffold(
       body: AmbientBackground(
         pine: null,
-        clay: 0.06,
-        clayTop: 500,
+        sage: 0.06,
+        sageTop: 500,
         child: SafeArea(
           bottom: false,
           child: ContentWidth(
@@ -58,15 +59,22 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                 ScreenTopBar(
                   title: 'Keep or let go',
                   onBack: () => context.go(AppRoutes.home),
-                  trailing: TextButton(
-                    onPressed: () {}, // Placeholder until the task engine.
-                    style: TextButton.styleFrom(
-                      foregroundColor: AppColors.ink3,
-                      padding: EdgeInsets.zero,
-                    ),
-                    child: const Text('Skip'),
-                  ),
+                  // Hidden: one sample item has nothing to skip to.
+                  // Unlocked by the real assessment (Module 4).
+                  trailing: Features.assessmentEngine
+                      ? TextButton(
+                          onPressed: () {},
+                          style: TextButton.styleFrom(
+                            foregroundColor: AppColors.ink3,
+                            padding: EdgeInsets.zero,
+                          ),
+                          child: const Text('Skip'),
+                        )
+                      : null,
                 ),
+                const SizedBox(height: AppSpace.s3),
+                Text('SAMPLE PREVIEW', style: AppTypography.eyebrow),
+                const SizedBox(height: AppSpace.s8),
                 const TaskProgress(current: 4, total: 12, minutesLeft: 2),
                 const SizedBox(height: AppSpace.s26),
                 _ItemCard(onKeep: _choose, onLetGo: _choose),
@@ -111,13 +119,13 @@ class _ItemCard extends StatelessWidget {
             height: AppSizes.itemArt,
             alignment: Alignment.center,
             decoration: const BoxDecoration(
-              color: AppColors.claySoft,
+              color: AppColors.sageSoft,
               shape: BoxShape.circle,
             ),
             child: const LineIcon(
               LineGlyphs.stack,
               size: AppSizes.itemArtIcon,
-              color: AppColors.clay,
+              color: AppColors.sage,
               strokeWidth: 1.8,
             ),
           ),

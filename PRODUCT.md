@@ -27,7 +27,7 @@ It combines established clinical scoring instruments with AI models trained on c
 ## Operating Context
 
 - Used privately on the person's own Android phone, often alone and in a vulnerable moment.
-- Flow: welcome, register (with explicit consent), dashboard, choose a condition, assessment, report, then therapy programs, progress, history, and the chatbot.
+- Flow: welcome, register (with explicit consent), log in, dashboard, choose a condition, assessment, report, then therapy programs, progress, history, and the chatbot.
 - Hoarding screening can include photos of the user's rooms, which are uploaded for the clutter-rating model.
 - Assessments include interactive tasks, such as a 12-item "Keep or let go" decision task with a 0–4 "How hard was that decision?" rating, as well as questionnaires.
 - Demos run on an Android phone in front of the FYP panel.
@@ -39,7 +39,7 @@ It combines established clinical scoring instruments with AI models trained on c
 - **Scope:** exactly two conditions, OCD and Hoarding Disorder. BDD is excluded and must not appear anywhere.
 - **Terminology:** always "preliminary screening". Never "diagnosis", "diagnose", or "you have X" in UI copy or code comments.
 - **Language:** English only. OCI-R and SI-R are used in their validated English versions.
-- **Data:** stored in Firebase under the user's account after explicit consent at registration ("I understand this app provides preliminary screening, not a medical diagnosis"). Room photos are uploaded to the backend for the AI model.
+- **Data:** stored in Firebase under the user's account after explicit consent at registration ("I understand this app gives a preliminary screening (an early check), not a medical diagnosis"). Room photos are uploaded to the backend for the AI model.
 - **Risk handling:** when answers suggest high distress or risk, show a calm prompt that links to the Safety screen (contact local emergency services or someone you trust).
 - **Open:** verified Pakistani helplines are not confirmed yet and must not be invented. Safety planning tools are not built yet.
 - **Open:** the OCD text model depends on SMHD access (requested). The Reddit-derived corpus (`docs/DATA.md`) is labelled by subreddit membership, not by clinical annotation, and results must be described that way.

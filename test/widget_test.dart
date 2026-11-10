@@ -6,6 +6,8 @@ import 'package:mindpath_ai/app.dart';
 import 'package:mindpath_ai/screens/forgot_password_screen.dart';
 import 'package:mindpath_ai/screens/login_screen.dart';
 import 'package:mindpath_ai/services/mock_auth_service.dart';
+import 'package:mindpath_ai/widgets/dashboard_cards.dart';
+import 'package:mindpath_ai/widgets/line_icon.dart';
 
 const _demo = MockAuthService.demoEmail;
 
@@ -35,6 +37,14 @@ Future<void> _enter(WidgetTester tester, String label, String text) async {
     scrollable: find.byType(Scrollable).first,
   );
   await tester.enterText(_field(label), text);
+}
+
+Future<void> _openHome(WidgetTester tester) async {
+  await _openLogin(tester);
+  await _enter(tester, 'Email', _demo);
+  await _enter(tester, 'Password', MockAuthService.demoPassword);
+  await tester.testTextInput.receiveAction(TextInputAction.done);
+  await tester.pumpAndSettle();
 }
 
 Future<void> _openLogin(WidgetTester tester) async {
@@ -67,7 +77,7 @@ void main() {
     );
     await tester.pumpWidget(MindPathApp(authService: auth));
     await tester.pump();
-    expect(find.text('Start your check-in'), findsOneWidget);
+    expect(find.text('Answer a few questions'), findsOneWidget);
   });
 
   testWidgets('Login reaches the dashboard', (tester) async {
@@ -78,7 +88,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.textContaining('Demo'), findsOneWidget);
-    expect(find.text('Start your check-in'), findsOneWidget);
+    expect(find.text('Answer a few questions'), findsOneWidget);
   });
 
   testWidgets('Login failures are generic and lock after 5', (tester) async {
@@ -92,8 +102,10 @@ void main() {
       if (i < 4) expect(find.text(LoginScreen.failedMessage), findsOneWidget);
     }
 
-    expect(find.text('Try again in 30s'), findsOneWidget);
-    final locked = tester.widget<FilledButton>(_button('Try again in 30s'));
+    expect(find.text('Try again in 30 seconds'), findsOneWidget);
+    final locked = tester.widget<FilledButton>(
+      _button('Try again in 30 seconds'),
+    );
     expect(locked.onPressed, isNull);
 
     // Expiry is covered by the LoginThrottle unit test; dispose the ticker.
@@ -111,6 +123,140 @@ void main() {
     expect(find.text(ForgotPasswordScreen.sentMessage), findsOneWidget);
   });
 
+  testWidgets('Every Dashboard section has a plain heading and its icon', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(1080, 3000);
+    tester.view.devicePixelRatio = 3;
+    addTearDown(tester.view.reset);
+    await _openHome(tester);
+    await tester.tap(find.text('Low'));
+    await tester.pumpAndSettle();
+
+    Finder glyph(LineGlyph g) =>
+        find.byWidgetPredicate((w) => w is LineIcon && identical(w.glyph, g));
+
+    for (final (heading, icon) in [
+      ('How do you feel?', LineGlyphs.mood),
+      ('Answer a few questions', LineGlyphs.questions),
+      ('Slow breathing', LineGlyphs.breathe),
+      ('Calm your senses', LineGlyphs.senses),
+    ]) {
+      expect(find.text(heading), findsOneWidget, reason: heading);
+      expect(glyph(icon), findsWidgets, reason: heading);
+    }
+    expect(glyph(LineGlyphs.phone), findsOneWidget);
+  });
+
+  testWidgets('Sections that are not built yet stay hidden', (tester) async {
+    await _openHome(tester);
+    expect(find.text('Your progress'), findsNothing);
+
+    await _tap(tester, find.text('Start'));
+    await tester.pumpAndSettle();
+    expect(find.text('Skip'), findsNothing);
+    expect(find.text('SAMPLE PREVIEW'), findsOneWidget);
+
+    await _tap(tester, find.text('Let it go'));
+    await tester.pumpAndSettle();
+    expect(find.text('Your results'), findsOneWidget);
+    expect(find.text('SAMPLE PREVIEW'), findsOneWidget);
+    expect(find.byTooltip('Share'), findsNothing);
+    expect(find.textContaining('Suggested next'), findsNothing);
+  });
+
+  group('Dashboard steps', () {
+    CheckInHero hero(WidgetTester tester) =>
+        tester.widget(find.byType(CheckInHero));
+
+    testWidgets('run from mood down to questions', (tester) async {
+      await _openHome(tester);
+      expect(find.text('MOOD CHECK-IN'), findsOneWidget);
+      expect(find.text('QUESTIONS'), findsOneWidget);
+      double top(String text) => tester.getTopLeft(find.text(text)).dy;
+      expect(top('MOOD CHECK-IN'), lessThan(top('How do you feel?')));
+      expect(top('How do you feel?'), lessThan(top('QUESTIONS')));
+      expect(top('QUESTIONS'), lessThan(top('Answer a few questions')));
+    });
+
+    testWidgets('keep the questions quiet until a mood is chosen', (
+      tester,
+    ) async {
+      await _openHome(tester);
+      expect(hero(tester).active, isFalse);
+
+      await tester.tap(find.text('Good'));
+      await tester.pumpAndSettle();
+      expect(hero(tester).active, isTrue);
+    });
+
+    testWidgets('never block the questions behind the mood', (tester) async {
+      await _openHome(tester);
+      expect(hero(tester).active, isFalse);
+
+      await _tap(tester, find.text('Start'));
+      await tester.pumpAndSettle();
+      expect(find.text('Keep or let go'), findsOneWidget);
+    });
+
+    testWidgets('show the exercises before the next step', (tester) async {
+      await _openHome(tester);
+      await tester.tap(find.text('Low'));
+      await tester.pumpAndSettle();
+      expect(
+        tester.getTopLeft(find.byType(SupportOptions)).dy,
+        lessThan(tester.getTopLeft(find.text('QUESTIONS')).dy),
+      );
+    });
+  });
+
+  group('Support options', () {
+    Finder exercises() => find.byType(SupportOptions);
+
+    testWidgets('stay hidden until a mood is chosen', (tester) async {
+      await _openHome(tester);
+      expect(exercises(), findsNothing);
+    });
+
+    for (final mood in ['Very low', 'Low']) {
+      testWidgets('appear for a mood of $mood', (tester) async {
+        await _openHome(tester);
+        await tester.tap(find.text(mood));
+        await tester.pumpAndSettle();
+        expect(exercises(), findsOneWidget);
+      });
+    }
+
+    for (final mood in ['Okay', 'Good', 'Great']) {
+      testWidgets('stay hidden for a mood of $mood', (tester) async {
+        await _openHome(tester);
+        await tester.tap(find.text(mood));
+        await tester.pumpAndSettle();
+        expect(exercises(), findsNothing);
+      });
+    }
+
+    testWidgets('hide again when the mood improves', (tester) async {
+      await _openHome(tester);
+      await tester.tap(find.text('Low'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Good'));
+      await tester.pumpAndSettle();
+      expect(exercises(), findsNothing);
+    });
+
+    testWidgets('say the exercise is coming soon when tapped', (tester) async {
+      await _openHome(tester);
+      await tester.tap(find.text('Very low'));
+      await tester.pumpAndSettle();
+      expect(find.text(SupportOptions.soonMessage), findsNothing);
+
+      await tester.tap(find.text('Slow breathing'));
+      await tester.pumpAndSettle();
+      expect(find.text(SupportOptions.soonMessage), findsOneWidget);
+    });
+  });
+
   testWidgets('Register stays disabled until valid and consented', (
     tester,
   ) async {
@@ -121,7 +267,7 @@ void main() {
     await _enter(tester, 'Full name', 'Ali Khan');
     await _enter(tester, 'Email', 'ali@example.com');
     await _enter(tester, 'Password', 'Blue!River9');
-    await _enter(tester, 'Confirm password', 'Blue!River9');
+    await _enter(tester, 'Type password again', 'Blue!River9');
     await tester.pump();
 
     FilledButton submit() => tester.widget(_button('Create account'));
@@ -139,6 +285,6 @@ void main() {
 
     await _tap(tester, _button('Create account'));
     await tester.pumpAndSettle();
-    expect(find.text('Start your check-in'), findsOneWidget);
+    expect(find.text(LoginScreen.accountCreatedMessage), findsOneWidget);
   });
 }

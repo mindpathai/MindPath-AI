@@ -17,6 +17,12 @@ data carries a clinical diagnosis of the people involved.
 How the text corpora for the OCD linguistic module were sourced, labelled, cleaned and
 balanced. Nothing in these corpora carries a clinical diagnosis (see *Labelling method*).
 
+**SMHD status.** SMHD (the Self-reported Mental Health Diagnoses dataset) was planned as
+the primary OCD source. Access has been requested and not yet granted, so nothing from it
+is in `ml/data/`. Until it arrives, the Reddit-derived corpora below are the OCD data,
+and every result from them must be described as "posted in r/OCD", not as a diagnosis
+(see *Labelling method*).
+
 ### Corpora
 
 | File | Classes | Rows per class | Total | Role |

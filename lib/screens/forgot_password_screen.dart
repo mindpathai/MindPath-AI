@@ -42,6 +42,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   }
 
   Future<void> _submit() async {
+    // A second tap can land before the rebuild that disables the button.
+    if (_loading) return;
     if (!_formKey.currentState!.validate()) return;
     final auth = AuthScope.read(context);
     setState(() {
@@ -126,9 +128,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               keyboardType: TextInputType.emailAddress,
                               textInputAction: TextInputAction.done,
                               autofillHints: const [AutofillHints.email],
-                              onSubmitted: (_) {
-                                if (!_loading) _submit();
-                              },
+                              maxLength: kMaxEmailLength,
+                              onSubmitted: (_) => _submit(),
                             ),
                           ),
                           FormMessage(_formError),

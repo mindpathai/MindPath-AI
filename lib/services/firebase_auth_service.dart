@@ -8,7 +8,12 @@ import 'package:mindpath_ai/services/validators.dart';
 
 /// Version of the consent wording on the Register screen. Bump it whenever
 /// that wording changes, so each stored record shows which text was agreed to.
-const String kConsentVersion = '2026-10-v1';
+const String kConsentVersion = '2026-11-v2';
+
+/// How long one Firebase call may take before the app treats the network as
+/// down. Firestore in particular never fails a write while offline; it waits
+/// for the connection, which would leave the spinner turning for ever.
+const Duration kAuthTimeout = Duration(seconds: 20);
 
 /// [AuthService] backed by Firebase Authentication. Each user's profile and
 /// consent record live in Firestore at `users/{uid}`.
@@ -29,9 +34,10 @@ class FirebaseAuthService extends AuthService {
   late final StreamSubscription<User?> _sub;
   AppUser? _current;
 
-  /// True while sign-up is still writing the profile, so a half-made
-  /// account is never reported as signed in.
-  bool _signingUp = false;
+  /// Above zero during sign-up, and while an account from a timed-out
+  /// sign-up is being removed. Firebase signs a new account in straight
+  /// away; this keeps that session from being reported as signed in.
+  int _hiddenSessions = 0;
 
   @override
   AppUser? get currentUser => _current;
@@ -47,47 +53,74 @@ class FirebaseAuthService extends AuthService {
     final weak = validatePassword(password, name: cleanName, email: key);
     if (weak != null) throw WeakPassword(weak);
 
-    _signingUp = true;
+    _hiddenSessions++;
     try {
-      final credential = await _auth.createUserWithEmailAndPassword(
+      final pending = _auth.createUserWithEmailAndPassword(
         email: key,
         password: password,
       );
+      final UserCredential credential;
+      try {
+        credential = await pending.timeout(kAuthTimeout);
+      } on TimeoutException {
+        // The request may still reach Firebase. If it does, remove the
+        // account it made: no account may exist without its consent record.
+        _hiddenSessions++;
+        unawaited(
+          pending
+              .then((c) => _discard(c.user), onError: (Object _) {})
+              .whenComplete(() => _hiddenSessions--),
+        );
+        throw const AuthOffline();
+      }
       final user = credential.user!;
       try {
-        await user.updateDisplayName(cleanName);
-        await _userDoc(user.uid).set({
-          'name': cleanName,
-          'email': key,
-          'createdAt': FieldValue.serverTimestamp(),
-          // signUp is only reachable once both Register consent boxes are
-          // ticked, so reaching here means both were agreed to.
-          'consent': {
-            'version': kConsentVersion,
-            'acceptedAt': FieldValue.serverTimestamp(),
-            'isAdult': true,
-            'understandsScreeningNotDiagnosis': true,
-          },
-        });
+        await user.updateDisplayName(cleanName).timeout(kAuthTimeout);
+        await _userDoc(user.uid)
+            .set({
+              'name': cleanName,
+              'email': key,
+              'createdAt': FieldValue.serverTimestamp(),
+              // signUp is only reachable once both Register consent boxes are
+              // ticked, so reaching here means both were agreed to.
+              'consent': {
+                'version': kConsentVersion,
+                'acceptedAt': FieldValue.serverTimestamp(),
+                'isAdult': true,
+                'understandsScreeningNotDiagnosis': true,
+              },
+            })
+            .timeout(kAuthTimeout);
       } catch (e) {
         // No account may exist without its consent record.
-        try {
-          await user.delete();
-        } catch (_) {}
-        if (e is FirebaseException && e.code == 'unavailable') {
+        await _discard(user);
+        if (e is TimeoutException ||
+            (e is FirebaseException && e.code == 'unavailable')) {
           throw const AuthOffline();
         }
         rethrow;
       }
 
-      final appUser = AppUser(name: cleanName, email: key);
-      _setCurrent(appUser);
-      return appUser;
+      // After the writes above, which need the session. The user logs in
+      // themselves.
+      await _auth.signOut();
+      return AppUser(name: cleanName, email: key);
     } on FirebaseAuthException catch (e) {
       throw _mapError(e);
     } finally {
-      _signingUp = false;
+      _hiddenSessions--;
     }
+  }
+
+  /// Deletes a half-made account, and always ends its session, so a failed
+  /// sign-up can never leave someone signed in without a consent record.
+  Future<void> _discard(User? user) async {
+    try {
+      await user?.delete().timeout(kAuthTimeout);
+    } catch (_) {}
+    try {
+      await _auth.signOut();
+    } catch (_) {}
   }
 
   @override
@@ -96,15 +129,19 @@ class FirebaseAuthService extends AuthService {
     required String password,
   }) async {
     try {
-      final credential = await _auth.signInWithEmailAndPassword(
-        email: normalizeEmail(email),
-        password: password,
-      );
+      final credential = await _auth
+          .signInWithEmailAndPassword(
+            email: normalizeEmail(email),
+            password: password,
+          )
+          .timeout(kAuthTimeout);
       final appUser = _toAppUser(credential.user)!;
       _setCurrent(appUser);
       return appUser;
     } on FirebaseAuthException catch (e) {
       throw _mapError(e);
+    } on TimeoutException {
+      throw const AuthOffline();
     }
   }
 
@@ -117,11 +154,15 @@ class FirebaseAuthService extends AuthService {
   @override
   Future<void> resetPassword(String email) async {
     try {
-      await _auth.sendPasswordResetEmail(email: normalizeEmail(email));
+      await _auth
+          .sendPasswordResetEmail(email: normalizeEmail(email))
+          .timeout(kAuthTimeout);
     } on FirebaseAuthException catch (e) {
       // Same outcome whether or not the account exists.
       if (e.code == 'user-not-found' || e.code == 'invalid-email') return;
       throw _mapError(e);
+    } on TimeoutException {
+      throw const AuthOffline();
     }
   }
 
@@ -136,7 +177,7 @@ class FirebaseAuthService extends AuthService {
 
   /// Picks up restored sessions and sign-outs from outside this service.
   void _onAuthChanged(User? user) {
-    if (_signingUp) return;
+    if (_hiddenSessions > 0) return;
     final next = _toAppUser(user);
     if (next?.email == _current?.email && next?.name == _current?.name) return;
     _setCurrent(next);

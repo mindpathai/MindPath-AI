@@ -5,6 +5,28 @@ import 'package:mindpath_ai/theme/app_colors.dart';
 import 'package:mindpath_ai/theme/app_tokens.dart';
 import 'package:mindpath_ai/theme/app_typography.dart';
 
+/// A screen change with no sliding or zooming: the new screen fades in
+/// over the old one with the app's one curve. Nothing moves across the
+/// screen, so the layout around it never seems to jump. iOS keeps its own
+/// transition for the swipe-back gesture.
+class CalmFadeTransitionsBuilder extends PageTransitionsBuilder {
+  const CalmFadeTransitionsBuilder();
+
+  @override
+  Widget buildTransitions<T>(
+    PageRoute<T> route,
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    return FadeTransition(
+      opacity: CurvedAnimation(parent: animation, curve: AppMotion.curve),
+      child: child,
+    );
+  }
+}
+
 /// Wires the design tokens into Material so stock widgets match.
 abstract final class AppTheme {
   static ThemeData get light {
@@ -13,7 +35,7 @@ abstract final class AppTheme {
       onPrimary: AppColors.onPine,
       primaryContainer: AppColors.pineSoft,
       onPrimaryContainer: AppColors.ink,
-      secondary: AppColors.clay,
+      secondary: AppColors.sage,
       surface: AppColors.surface,
       onSurface: AppColors.ink,
       onSurfaceVariant: AppColors.ink2,
@@ -64,11 +86,11 @@ abstract final class AppTheme {
       ),
       pageTransitionsTheme: const PageTransitionsTheme(
         builders: {
-          TargetPlatform.android: FadeForwardsPageTransitionsBuilder(),
+          TargetPlatform.android: CalmFadeTransitionsBuilder(),
           TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-          TargetPlatform.windows: FadeForwardsPageTransitionsBuilder(),
+          TargetPlatform.windows: CalmFadeTransitionsBuilder(),
           TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
-          TargetPlatform.linux: FadeForwardsPageTransitionsBuilder(),
+          TargetPlatform.linux: CalmFadeTransitionsBuilder(),
         },
       ),
     );

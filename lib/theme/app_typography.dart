@@ -3,9 +3,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:mindpath_ai/theme/app_colors.dart';
 
-/// The type scale. Only these sizes exist: 38, 31, 25, 23, 15, 14, 13.5,
-/// 11.5. Fraunces is for greetings, questions and result headlines;
+/// The type scale. Only these sizes exist: 38, 31, 25, 23, 16, 15, 14.5,
+/// 13, 12.5. Fraunces is for greetings, questions and result headlines;
 /// Hanken Grotesk is for everything else.
+///
+/// Body text is 15-16px and nothing readable is under 12.5px: reading is
+/// harder under stress, and many users do not read English as a first
+/// language. All of it grows further with the phone's text-size setting.
 abstract final class AppTypography {
   static TextStyle _fraunces(
     double size, {
@@ -47,36 +51,36 @@ abstract final class AppTypography {
   static TextStyle get heading => _fraunces(23, height: 1.25, em: -0.015);
 
   // Hanken Grotesk
-  static TextStyle get lead => _hanken(15, FontWeight.w400, height: 1.55);
-  static TextStyle get strong => _hanken(15, FontWeight.w700);
+  static TextStyle get lead => _hanken(16, FontWeight.w400, height: 1.55);
+  static TextStyle get strong => _hanken(16, FontWeight.w700);
 
   /// Text typed into a field.
-  static TextStyle get field => _hanken(15, FontWeight.w500);
-  static TextStyle get body => _hanken(14, FontWeight.w400);
-  static TextStyle get bodySemi => _hanken(14, FontWeight.w600);
-  static TextStyle get small => _hanken(13.5, FontWeight.w400);
-  static TextStyle get smallSemi => _hanken(13.5, FontWeight.w600);
-  static TextStyle get smallBold => _hanken(13.5, FontWeight.w700);
-  static TextStyle get button => _hanken(14, FontWeight.w600);
-  static TextStyle get buttonLarge => _hanken(15, FontWeight.w600);
+  static TextStyle get field => _hanken(16, FontWeight.w500);
+  static TextStyle get body => _hanken(15, FontWeight.w400, height: 1.45);
+  static TextStyle get bodySemi => _hanken(15, FontWeight.w600);
+  static TextStyle get small => _hanken(14.5, FontWeight.w400, height: 1.45);
+  static TextStyle get smallSemi => _hanken(14.5, FontWeight.w600);
+  static TextStyle get smallBold => _hanken(14.5, FontWeight.w700);
+  static TextStyle get button => _hanken(15, FontWeight.w600);
+  static TextStyle get buttonLarge => _hanken(16, FontWeight.w600);
   static TextStyle get caption =>
-      _hanken(11.5, FontWeight.w400, height: 1.4, color: AppColors.ink3);
+      _hanken(13, FontWeight.w400, height: 1.45, color: AppColors.ink3);
   static TextStyle get captionSemi =>
-      _hanken(11.5, FontWeight.w600, color: AppColors.ink3);
+      _hanken(13, FontWeight.w600, color: AppColors.ink3);
 
   /// Uppercase date and section lines (pass upper-cased text).
   static TextStyle get eyebrow =>
-      _hanken(11.5, FontWeight.w600, em: 0.09, color: AppColors.ink3);
+      _hanken(12.5, FontWeight.w600, em: 0.08, color: AppColors.ink3);
 
   /// Uppercase field labels (pass upper-cased text).
   static TextStyle get fieldLabel =>
-      _hanken(11.5, FontWeight.w600, em: 0.06, color: AppColors.ink3);
+      _hanken(12.5, FontWeight.w600, em: 0.05, color: AppColors.ink3);
 
   /// SOS chip and level tags (pass upper-cased text).
-  static TextStyle get tag => _hanken(11.5, FontWeight.w700, em: 0.08);
+  static TextStyle get tag => _hanken(12.5, FontWeight.w700, em: 0.06);
 
   /// High / Medium / Low tags on the result (pass upper-cased text).
-  static TextStyle get levelTag => _hanken(11.5, FontWeight.w700, em: 0.05);
+  static TextStyle get levelTag => _hanken(12.5, FontWeight.w700, em: 0.04);
 
   /// Maps Material's slots onto the scale so stock widgets stay on it too.
   static TextTheme get textTheme => TextTheme(

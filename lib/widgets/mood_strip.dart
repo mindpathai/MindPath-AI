@@ -6,17 +6,21 @@ import 'package:mindpath_ai/theme/app_typography.dart';
 import 'package:mindpath_ai/widgets/line_icon.dart';
 import 'package:mindpath_ai/widgets/press_scale.dart';
 
-/// Five faces from "Very low" to "Great". Starts on the middle one;
-/// selection is local state only for now.
-class MoodStrip extends StatefulWidget {
-  const MoodStrip({super.key});
+/// Five faces from "Very low" to "Great". Nothing is selected until the user
+/// answers, so a selection always means a real answer.
+class MoodStrip extends StatelessWidget {
+  const MoodStrip({
+    super.key,
+    required this.selected,
+    required this.onSelected,
+  });
 
-  @override
-  State<MoodStrip> createState() => _MoodStripState();
-}
+  /// Index of the chosen face, or null before the user has answered.
+  final int? selected;
+  final ValueChanged<int> onSelected;
 
-class _MoodStripState extends State<MoodStrip> {
-  int _selected = 2;
+  /// Whether the face at [mood] is "Very low" or "Low".
+  static bool isLow(int mood) => mood <= 1;
 
   // Mouth paths from the design; the eyes are shared.
   static const _eyes = 'M8.5 9.5h.01M15.5 9.5h.01';
@@ -42,8 +46,8 @@ class _MoodStripState extends State<MoodStrip> {
             child: _MoodOption(
               label: _moods[i].$1,
               glyph: _glyphs[i],
-              selected: i == _selected,
-              onTap: () => setState(() => _selected = i),
+              selected: i == selected,
+              onTap: () => onSelected(i),
             ),
           ),
         ],
@@ -115,7 +119,11 @@ class _MoodOption extends StatelessWidget {
                 style: AppTypography.captionSemi.copyWith(
                   color: selected ? AppColors.ink : AppColors.ink3,
                 ),
-                child: Text(label, maxLines: 1, softWrap: false),
+                // Shrinks to fit at very large text, rather than clipping.
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(label, maxLines: 1, softWrap: false),
+                ),
               ),
             ],
           ),

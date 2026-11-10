@@ -11,7 +11,7 @@ enum PillStyle {
   /// Pine fill, white text: the screen's one main action.
   solid,
 
-  /// White fill, pine text: for use on the pine hero card.
+  /// Surface fill, pine text: for use on the pine hero card.
   light,
 
   /// Transparent with a 1.5px line border.
@@ -120,8 +120,8 @@ class PillButton extends StatelessWidget {
   }
 }
 
-/// The design's `.sos` chip: ink text on a clay-soft pill. The visible pill
-/// sits inside a 48px-tall tap area so it stays easy to hit.
+/// The design's `.sos` chip: a phone and ink text on a clay-soft pill. The
+/// visible pill sits inside a 48px-tall tap area so it stays easy to hit.
 class SosChip extends StatelessWidget {
   const SosChip({super.key, required this.onTap});
 
@@ -151,10 +151,21 @@ class SosChip extends StatelessWidget {
                     horizontal: AppSpace.s12,
                     vertical: AppSpace.s6,
                   ),
-                  // Ink, not clay: clay text on clay-soft is about 2.3:1.
-                  child: Text(
-                    'SOS',
-                    style: AppTypography.tag.copyWith(color: AppColors.ink),
+                  // Ink, not clay: clay text on clay-soft is about 2.9:1.
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const LineIcon(
+                        LineGlyphs.phone,
+                        size: AppSizes.iconSmall,
+                        color: AppColors.ink,
+                      ),
+                      const SizedBox(width: AppSpace.s4),
+                      Text(
+                        'SOS',
+                        style: AppTypography.tag.copyWith(color: AppColors.ink),
+                      ),
+                    ],
                   ),
                 ),
               ),

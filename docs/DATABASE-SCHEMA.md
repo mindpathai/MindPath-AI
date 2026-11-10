@@ -34,10 +34,10 @@ Written in `lib/services/firebase_auth_service.dart:59`, right after
 
 | Field | Type | Value written | Meaning |
 |---|---|---|---|
-| `version` | string | `"2026-10-v1"` | `kConsentVersion` (`firebase_auth_service.dart:11`). Identifies which consent wording was shown. |
+| `version` | string | `"2026-11-v2"` | `kConsentVersion` (`firebase_auth_service.dart`). Identifies which consent wording was shown. `2026-10-v1` was "…provides preliminary screening, not a medical diagnosis"; `2026-11-v2` is the plain-language wording below. |
 | `acceptedAt` | timestamp | server time | `FieldValue.serverTimestamp()` |
 | `isAdult` | bool | `true` | Register checkbox "I am 18 or older" |
-| `understandsScreeningNotDiagnosis` | bool | `true` | Register checkbox "I understand this app provides preliminary screening, not a medical diagnosis" |
+| `understandsScreeningNotDiagnosis` | bool | `true` | Register checkbox "I understand this app gives a preliminary screening (an early check), not a medical diagnosis" |
 
 Both booleans are always `true`. The Register button stays disabled until both boxes are
 ticked, and `signUp` does not receive the checkbox values, so reaching the write means both
@@ -51,7 +51,7 @@ were agreed to.
   "email": "abdul@example.com",
   "createdAt": "2026-10-27T12:00:00Z",
   "consent": {
-    "version": "2026-10-v1",
+    "version": "2026-11-v2",
     "acceptedAt": "2026-10-27T12:00:00Z",
     "isAdult": true,
     "understandsScreeningNotDiagnosis": true

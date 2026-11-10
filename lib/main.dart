@@ -25,7 +25,9 @@ void _registerFontLicences() {
   };
   LicenseRegistry.addLicense(() async* {
     for (final MapEntry(key: name, value: path) in fonts.entries) {
-      yield LicenseEntryWithLineBreaks([name], await rootBundle.loadString(path));
+      yield LicenseEntryWithLineBreaks([
+        name,
+      ], await rootBundle.loadString(path));
     }
   });
 }

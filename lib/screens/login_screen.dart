@@ -19,9 +19,14 @@ import 'package:mindpath_ai/widgets/layout.dart';
 
 /// Sign in. Failures never reveal whether the email has an account.
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({super.key, this.notice});
 
   static const String failedMessage = 'Email or password is incorrect';
+  static const String accountCreatedMessage =
+      'Account created. Please log in to continue.';
+
+  /// A success message from the screen that sent the user here.
+  final String? notice;
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -35,6 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool _loading = false;
   String? _formError;
+  late String? _notice = widget.notice;
   Timer? _ticker;
   int _lockSeconds = 0;
 
@@ -44,6 +50,14 @@ class _LoginScreenState extends State<LoginScreen> {
     _email.dispose();
     _password.dispose();
     super.dispose();
+  }
+
+  void _back() {
+    if (context.canPop()) {
+      context.pop();
+    } else {
+      context.go(AppRoutes.welcome);
+    }
   }
 
   void _startCountdown() {
@@ -64,11 +78,14 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _submit() async {
+    // A second tap can land before the rebuild that disables the button.
+    if (_loading || _lockSeconds > 0) return;
     if (!_formKey.currentState!.validate()) return;
     final auth = AuthScope.read(context);
     setState(() {
       _loading = true;
       _formError = null;
+      _notice = null;
     });
 
     try {
@@ -76,6 +93,10 @@ class _LoginScreenState extends State<LoginScreen> {
       _throttle.reset();
       if (mounted) context.go(AppRoutes.home);
       return;
+    } on TooManyAttempts catch (e) {
+      // Firebase's own limit. Says nothing about this password, so it does
+      // not count toward the lockout either.
+      _formError = e.message;
     } on AuthException {
       _throttle.recordFailure();
       _formError = LoginScreen.failedMessage;
@@ -111,7 +132,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: NoteText(kNoDiagnosisNote),
                   ),
                   children: [
-                    const SizedBox(height: AppSpace.s38),
+                    ScreenTopBar(onBack: _back),
+                    const SizedBox(height: AppSpace.s14),
                     const BrandHeader(
                       caption:
                           'A quiet first step for obsessive thoughts and '
@@ -136,6 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             validator: validateEmail,
                             keyboardType: TextInputType.emailAddress,
                             autofillHints: const [AutofillHints.email],
+                            maxLength: kMaxEmailLength,
                           ),
                           const SizedBox(height: AppSpace.s11),
                           AppTextField(
@@ -145,9 +168,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             isPassword: true,
                             textInputAction: TextInputAction.done,
                             autofillHints: const [AutofillHints.password],
-                            onSubmitted: (_) {
-                              if (!locked && !_loading) _submit();
-                            },
+                            maxLength: kMaxPasswordLength,
+                            onSubmitted: (_) => _submit(),
                           ),
                           Align(
                             alignment: Alignment.centerRight,
@@ -167,12 +189,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           ? 'Too many attempts. Please wait '
                                 '${_throttle.lockDuration.inSeconds} seconds '
                                 'and try again.'
-                          : _formError,
+                          : _formError ?? _notice,
+                      success: !locked && _formError == null,
                     ),
                     const SizedBox(height: AppSpace.s18),
                     PillButton.submit(
                       label: locked
-                          ? 'Try again in ${_lockSeconds}s'
+                          ? 'Try again in $_lockSeconds seconds'
                           : 'Log in',
                       loading: _loading,
                       onPressed: locked ? null : _submit,

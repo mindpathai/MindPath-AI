@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:mindpath_ai/theme/app_colors.dart';
 import 'package:mindpath_ai/theme/app_tokens.dart';
@@ -9,8 +12,12 @@ import 'package:mindpath_ai/widgets/line_icon.dart';
 /// The design's `.field`: a screen-coloured box (radius 15, 1px line
 /// border) with a small uppercase label above the value.
 ///
-/// Stays quiet until first blurred, then validates on every change.
-/// Set [isPassword] for an obscured field with a show/hide toggle.
+/// Stays quiet until first blurred, then validates on every change. With
+/// [validateAsYouType] it also starts validating once the user pauses
+/// typing, so a mistake shows before they leave the field, without an error
+/// flashing on every keystroke. Set [isPassword] for an obscured field with
+/// a show/hide toggle. [maxLength] stops input (typed or pasted) at that
+/// many characters, without a counter.
 class AppTextField extends StatefulWidget {
   const AppTextField({
     super.key,
@@ -22,6 +29,9 @@ class AppTextField extends StatefulWidget {
     this.autofillHints,
     this.isPassword = false,
     this.onSubmitted,
+    this.maxLength,
+    this.validateAsYouType = false,
+    this.textCapitalization = TextCapitalization.none,
   });
 
   final TextEditingController controller;
@@ -32,6 +42,12 @@ class AppTextField extends StatefulWidget {
   final Iterable<String>? autofillHints;
   final bool isPassword;
   final ValueChanged<String>? onSubmitted;
+  final int? maxLength;
+  final bool validateAsYouType;
+  final TextCapitalization textCapitalization;
+
+  /// How long the user must pause before [validateAsYouType] kicks in.
+  static const Duration typingPause = Duration(milliseconds: 700);
 
   @override
   State<AppTextField> createState() => _AppTextFieldState();
@@ -41,6 +57,7 @@ class _AppTextFieldState extends State<AppTextField> {
   final FocusNode _focus = FocusNode();
   bool _touched = false;
   bool _obscured = true;
+  Timer? _pause;
 
   // Material draws a floating label at 75% of its style, so the label
   // style is scaled up by 1/0.75 to render at exactly 11.5px.
@@ -53,11 +70,25 @@ class _AppTextFieldState extends State<AppTextField> {
   }
 
   void _onFocusChange() {
-    if (!_focus.hasFocus && !_touched) setState(() => _touched = true);
+    if (!_focus.hasFocus) _markTouched();
+  }
+
+  void _markTouched() {
+    _pause?.cancel();
+    if (!_touched && mounted) setState(() => _touched = true);
+  }
+
+  void _onChanged(String value) {
+    if (!widget.validateAsYouType || _touched) return;
+    _pause?.cancel();
+    if (value.isNotEmpty) {
+      _pause = Timer(AppTextField.typingPause, _markTouched);
+    }
   }
 
   @override
   void dispose() {
+    _pause?.cancel();
     _focus.dispose();
     super.dispose();
   }
@@ -83,11 +114,17 @@ class _AppTextFieldState extends State<AppTextField> {
           ? TextInputType.visiblePassword
           : widget.keyboardType,
       textInputAction: widget.textInputAction,
+      textCapitalization: widget.textCapitalization,
       autofillHints: widget.autofillHints,
       obscureText: hidden,
       enableSuggestions: !widget.isPassword,
       autocorrect: !widget.isPassword,
       onFieldSubmitted: widget.onSubmitted,
+      onChanged: _onChanged,
+      inputFormatters: [
+        if (widget.maxLength != null)
+          LengthLimitingTextInputFormatter(widget.maxLength),
+      ],
       style: AppTypography.field.copyWith(
         letterSpacing: hidden ? AppSpace.s3 : null,
       ),

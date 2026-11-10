@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 
+import 'package:mindpath_ai/features.dart';
 import 'package:mindpath_ai/screens/assessment_screen.dart';
 import 'package:mindpath_ai/screens/chat_screen.dart';
 import 'package:mindpath_ai/screens/forgot_password_screen.dart';
@@ -45,6 +46,19 @@ class AppRoutes {
     forgotPassword,
     safety,
   };
+
+  /// Only for signed-out users. A signed-in user who lands on one (for
+  /// example after a login that finished late on a slow network) goes Home.
+  static const Set<String> signedOutOnly = {welcome, login, register};
+
+  /// Screens with no content yet. Nothing links to them, and a direct link
+  /// lands on Home until the feature ships (see [Features]).
+  static const Set<String> hidden = {
+    if (!Features.therapy) therapy,
+    if (!Features.progress) progress,
+    if (!Features.historyAndChat) history,
+    if (!Features.historyAndChat) chat,
+  };
 }
 
 /// Builds one bottom-nav branch with a single route.
@@ -54,7 +68,8 @@ StatefulShellBranch _tab(String path, GoRouterWidgetBuilder builder) {
   );
 }
 
-/// Signed-out users are sent to Welcome from any non-public route.
+/// Signed-out users are sent to Welcome from any non-public route, and
+/// signed-in users are sent Home from the sign-in screens.
 GoRouter createRouter(AuthService auth) => GoRouter(
   initialLocation: AppRoutes.root,
   refreshListenable: auth,
@@ -63,6 +78,10 @@ GoRouter createRouter(AuthService auth) => GoRouter(
     if (!signedIn && !AppRoutes.public.contains(state.matchedLocation)) {
       return AppRoutes.welcome;
     }
+    if (signedIn && AppRoutes.signedOutOnly.contains(state.matchedLocation)) {
+      return AppRoutes.home;
+    }
+    if (AppRoutes.hidden.contains(state.matchedLocation)) return AppRoutes.home;
     return null;
   },
   routes: [
@@ -79,7 +98,7 @@ GoRouter createRouter(AuthService auth) => GoRouter(
     ),
     GoRoute(
       path: AppRoutes.login,
-      builder: (context, state) => const LoginScreen(),
+      builder: (context, state) => LoginScreen(notice: state.extra as String?),
     ),
     GoRoute(
       path: AppRoutes.register,

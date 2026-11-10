@@ -8,6 +8,7 @@ import 'package:mindpath_ai/screens/forgot_password_screen.dart';
 import 'package:mindpath_ai/screens/login_screen.dart';
 import 'package:mindpath_ai/services/auth_service.dart';
 import 'package:mindpath_ai/services/mock_auth_service.dart';
+import 'package:mindpath_ai/widgets/app_buttons.dart';
 
 Finder _field(String label) =>
     find.widgetWithText(TextFormField, label.toUpperCase());
@@ -91,7 +92,7 @@ void main() {
       await tester.enterText(_field('Full name'), 'Ali Khan');
       await tester.enterText(_field('Email'), 'ali@example.com');
       await tester.enterText(_field('Password'), 'Blue!River9');
-      await tester.enterText(_field('Confirm password'), 'Blue!River9');
+      await tester.enterText(_field('Type password again'), 'Blue!River9');
       await _tap(tester, find.text('I am 18 or older'));
       await _tap(tester, find.textContaining('not a medical diagnosis').last);
       await _tap(tester, _button('Create account'));
@@ -109,6 +110,7 @@ void main() {
       ('/home', true),
       ('/assessment', true),
       ('/report', true),
+      ('/profile', true),
     ]) {
       testWidgets(route, (tester) async {
         final handle = tester.ensureSemantics();
@@ -138,6 +140,60 @@ void main() {
         isChecked: true,
       ),
     );
+    handle.dispose();
+  });
+
+  testWidgets('Very large text fits on the Dashboard', (tester) async {
+    tester.platformDispatcher.textScaleFactorTestValue = 2;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    await _open(tester, '/home', signedIn: true);
+    tester.view.physicalSize = const Size(360 * 3, 640 * 3);
+    await tester.pumpAndSettle();
+
+    Rect rect(Finder finder) => tester.getRect(finder);
+
+    expect(
+      rect(find.text('Very low')).right,
+      lessThanOrEqualTo(rect(find.text('Low')).left),
+    );
+    expect(
+      rect(find.text('Good')).right,
+      lessThanOrEqualTo(rect(find.text('Great')).left),
+    );
+    expect(rect(find.text('Great')).right, lessThanOrEqualTo(360));
+    expect(
+      rect(find.text('Questions')).right,
+      lessThanOrEqualTo(rect(find.text('You')).left),
+    );
+    expect(
+      rect(find.textContaining('Demo')).right,
+      lessThanOrEqualTo(rect(find.byType(SosChip)).left),
+    );
+  });
+
+  testWidgets('Dashboard steps are announced with their number', (
+    tester,
+  ) async {
+    final handle = tester.ensureSemantics();
+    await _open(tester, '/home', signedIn: true);
+    expect(find.bySemanticsLabel('Step 1, Mood check-in'), findsOneWidget);
+    expect(find.bySemanticsLabel('Step 2, Questions'), findsOneWidget);
+    handle.dispose();
+  });
+
+  testWidgets('No mood is selected until the user answers', (tester) async {
+    final handle = tester.ensureSemantics();
+    await _open(tester, '/home', signedIn: true);
+    for (final mood in ['Very low', 'Low', 'Okay', 'Good', 'Great']) {
+      expect(
+        tester.getSemantics(find.bySemanticsLabel(mood)),
+        isSemantics(
+          isInMutuallyExclusiveGroup: true,
+          hasCheckedState: true,
+          isChecked: false,
+        ),
+      );
+    }
     handle.dispose();
   });
 

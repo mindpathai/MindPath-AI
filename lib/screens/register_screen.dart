@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:mindpath_ai/routes/app_router.dart';
+import 'package:mindpath_ai/screens/login_screen.dart';
 import 'package:mindpath_ai/services/auth_scope.dart';
 import 'package:mindpath_ai/services/auth_service.dart';
 import 'package:mindpath_ai/services/validators.dart';
@@ -67,7 +68,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   String? _validateEmail(String? v) {
     final e = _emailError;
-    return validateEmail(v) ??
+    return validateEmail(v, checkTypos: true) ??
         (e != null && normalizeEmail(v ?? '') == e.value ? e.message : null);
   }
 
@@ -90,6 +91,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       _validateConfirm(_confirm.text) == null;
 
   Future<void> _submit() async {
+    // A second tap can land before the rebuild that disables the button.
+    if (_loading) return;
     if (!_formKey.currentState!.validate()) return;
     final auth = AuthScope.read(context);
     setState(() {
@@ -103,7 +106,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
         email: _email.text,
         password: _password.text,
       );
-      if (mounted) context.go(AppRoutes.home);
+      if (mounted) {
+        context.pushReplacement(
+          AppRoutes.login,
+          extra: LoginScreen.accountCreatedMessage,
+        );
+      }
       return;
     } on EmailAlreadyInUse catch (e) {
       _emailError = (value: normalizeEmail(_email.text), message: e.message);
@@ -120,6 +128,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (!mounted) return;
     setState(() => _loading = false);
     _formKey.currentState!.validate();
+  }
+
+  void _back() {
+    if (context.canPop()) {
+      context.pop();
+    } else {
+      context.go(AppRoutes.welcome);
+    }
   }
 
   @override
@@ -140,7 +156,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: NoteText(kNoDiagnosisNote),
                   ),
                   children: [
-                    const SizedBox(height: AppSpace.s38),
+                    ScreenTopBar(onBack: _back),
+                    const SizedBox(height: AppSpace.s14),
                     const BrandHeader(
                       title: 'Create account',
                       caption: 'It only takes a minute.',
@@ -156,7 +173,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             label: 'Full name',
                             validator: validateName,
                             keyboardType: TextInputType.name,
+                            textCapitalization: TextCapitalization.words,
                             autofillHints: const [AutofillHints.name],
+                            maxLength: kMaxNameLength,
                           ),
                           const SizedBox(height: AppSpace.s11),
                           AppTextField(
@@ -165,6 +184,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             validator: _validateEmail,
                             keyboardType: TextInputType.emailAddress,
                             autofillHints: const [AutofillHints.email],
+                            maxLength: kMaxEmailLength,
+                            validateAsYouType: true,
                           ),
                           const SizedBox(height: AppSpace.s11),
                           AppTextField(
@@ -173,16 +194,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             validator: _validatePassword,
                             isPassword: true,
                             autofillHints: const [AutofillHints.newPassword],
+                            maxLength: kMaxPasswordLength,
                           ),
                           const SizedBox(height: AppSpace.s12),
                           PasswordFeedback(password: _password.text),
                           const SizedBox(height: AppSpace.s11),
                           AppTextField(
                             controller: _confirm,
-                            label: 'Confirm password',
+                            label: 'Type password again',
                             validator: _validateConfirm,
                             isPassword: true,
                             textInputAction: TextInputAction.done,
+                            maxLength: kMaxPasswordLength,
                           ),
                         ],
                       ),
@@ -205,8 +228,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           _ConsentTile(
                             value: _understands,
                             label:
-                                'I understand this app provides preliminary '
-                                'screening, not a medical diagnosis',
+                                'I understand this app gives a preliminary '
+                                'screening (an early check), not a medical '
+                                'diagnosis',
                             onChanged: (v) => setState(() => _understands = v),
                           ),
                         ],

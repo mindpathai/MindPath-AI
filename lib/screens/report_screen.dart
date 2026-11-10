@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:mindpath_ai/features.dart';
 import 'package:mindpath_ai/routes/app_router.dart';
 import 'package:mindpath_ai/theme/app_colors.dart';
 import 'package:mindpath_ai/theme/app_tokens.dart';
@@ -13,25 +14,27 @@ import 'package:mindpath_ai/widgets/icon_badge.dart';
 import 'package:mindpath_ai/widgets/layout.dart';
 import 'package:mindpath_ai/widgets/line_icon.dart';
 
-/// Placeholder version of the result screen ("Your fingerprint"), filled
+/// Placeholder version of the result screen ("Your results"), filled
 /// with the design's sample data until the inference service exists.
 class ReportScreen extends StatelessWidget {
   const ReportScreen({super.key});
 
-  // Sample data from the design, outermost ring first.
+  // Sample data from the design, outermost ring first. Levels use calm
+  // tones only (pine high, sage medium, sand low): a result is information,
+  // never an alarm, so it never borrows the alert colour.
   static const List<({String name, Tone tone, String level, double value})>
   _sample = [
-    (name: 'Doubt & checking', tone: Tone.clay, level: 'High', value: 0.252),
-    (name: 'Intrusive thoughts', tone: Tone.clay, level: 'High', value: 0.215),
+    (name: 'Doubt & checking', tone: Tone.pine, level: 'High', value: 0.252),
+    (name: 'Unwanted thoughts', tone: Tone.pine, level: 'High', value: 0.215),
     (
-      name: 'Difficulty discarding',
-      tone: Tone.pine,
+      name: 'Hard to throw things away',
+      tone: Tone.sage,
       level: 'Medium',
       value: 0.176,
     ),
-    (name: 'Order & symmetry', tone: Tone.pine, level: 'Medium', value: 0.147),
-    (name: 'Clutter at home', tone: Tone.sage, level: 'Low', value: 0.125),
-    (name: 'Overall distress', tone: Tone.sage, level: 'Low', value: 0.1),
+    (name: 'Order & neatness', tone: Tone.sage, level: 'Medium', value: 0.147),
+    (name: 'Clutter at home', tone: Tone.sand, level: 'Low', value: 0.125),
+    (name: 'Overall stress', tone: Tone.sand, level: 'Low', value: 0.1),
   ];
 
   void _back(BuildContext context) {
@@ -47,24 +50,28 @@ class ReportScreen extends StatelessWidget {
     return Scaffold(
       body: AmbientBackground(
         pine: 0.06,
-        clay: null,
+        sage: null,
         child: SafeArea(
           child: ContentWidth(
             child: ScreenScroll(
               children: [
                 ScreenTopBar(
-                  title: 'Your fingerprint',
+                  title: 'Your results',
                   onBack: () => _back(context),
-                  trailing: IconButton(
-                    tooltip: 'Share',
-                    padding: EdgeInsets.zero,
-                    alignment: Alignment.centerRight,
-                    onPressed: () {}, // Placeholder until reports export.
-                    icon: const LineIcon(
-                      LineGlyphs.share,
-                      color: AppColors.ink2,
-                    ),
-                  ),
+                  // Hidden: there is nothing to share yet. Unlocked by
+                  // report export (Module 9).
+                  trailing: Features.reportExport
+                      ? IconButton(
+                          tooltip: 'Share',
+                          padding: EdgeInsets.zero,
+                          alignment: Alignment.centerRight,
+                          onPressed: () {},
+                          icon: const LineIcon(
+                            LineGlyphs.share,
+                            color: AppColors.ink2,
+                          ),
+                        )
+                      : null,
                 ),
                 const SizedBox(height: AppSpace.s3),
                 Text('SAMPLE PREVIEW', style: AppTypography.eyebrow),
@@ -99,18 +106,23 @@ class ReportScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: AppSpace.s14),
-                RowCard(
-                  glyph: LineGlyphs.ladder,
-                  tone: Tone.clay,
-                  title: 'Suggested next: checking ladder',
-                  caption: 'Start with the easiest step. 10 minutes.',
-                  onTap: () {}, // Placeholder until Therapy exists.
-                ),
-                const SizedBox(height: AppSpace.s12),
+                // Hidden: it leads to a program that does not exist yet.
+                // Unlocked by Therapy (Module 10).
+                if (Features.therapy) ...[
+                  RowCard(
+                    glyph: LineGlyphs.ladder,
+                    tone: Tone.pine,
+                    title: 'Suggested next: checking ladder',
+                    caption: 'Start with the easiest step. 10 minutes.',
+                    onTap: () {},
+                  ),
+                  const SizedBox(height: AppSpace.s12),
+                ],
                 const NoteText(
                   'AI-assisted preliminary screening, based on your answers '
                   'and the OCI-R scoring bands. This is not a medical '
-                  'diagnosis.',
+                  'diagnosis. Please talk to a doctor or therapist about '
+                  'your results.',
                 ),
                 const SizedBox(height: AppSpace.s26),
               ],

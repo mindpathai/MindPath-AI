@@ -1,19 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:mindpath_ai/features.dart';
 import 'package:mindpath_ai/routes/app_router.dart';
 import 'package:mindpath_ai/services/auth_scope.dart';
 import 'package:mindpath_ai/theme/app_tokens.dart';
 import 'package:mindpath_ai/widgets/ambient_background.dart';
 import 'package:mindpath_ai/widgets/dashboard_cards.dart';
-import 'package:mindpath_ai/widgets/icon_badge.dart';
 import 'package:mindpath_ai/widgets/layout.dart';
-import 'package:mindpath_ai/widgets/line_icon.dart';
 import 'package:mindpath_ai/widgets/mood_strip.dart';
 
 /// Home tab: the user's dashboard.
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  // Not saved yet: it lasts until the app closes.
+  int? _mood;
+
+  /// The support options are hidden until an answer makes them relevant.
+  /// Assessment results join this check once scoring exists (Module 4).
+  bool get _showSupport {
+    final mood = _mood;
+    return mood != null && MoodStrip.isLow(mood);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +37,7 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       body: AmbientBackground(
-        clayTop: 420,
+        sageTop: 420,
         child: SafeArea(
           bottom: false,
           child: ContentWidth(
@@ -40,40 +54,49 @@ class HomeScreen extends StatelessWidget {
                   now: DateTime.now(),
                   onSos: () => context.push(AppRoutes.safety),
                 ),
-                const SizedBox(height: AppSpace.s16),
-                const MoodCard(child: MoodStrip()),
-                const SizedBox(height: AppSpace.s16),
-                CheckInHero(onStart: () => context.go(AppRoutes.assessment)),
-                const SizedBox(height: AppSpace.s16),
-                IntrinsicHeight(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Expanded(
-                        child: QuickActionCard(
-                          glyph: LineGlyphs.breathe,
-                          tone: Tone.pine,
-                          title: 'Breathe',
-                          caption: '4 · 7 · 8, two minutes',
-                          onTap: () {}, // Placeholder until Therapy exists.
-                        ),
-                      ),
-                      const SizedBox(width: AppSpace.s12),
-                      Expanded(
-                        child: QuickActionCard(
-                          glyph: LineGlyphs.ground,
-                          tone: Tone.sage,
-                          title: 'Ground',
-                          caption: '5 · 4 · 3 · 2 · 1 senses',
-                          onTap: () {}, // Placeholder until Therapy exists.
-                        ),
-                      ),
-                    ],
+                const SizedBox(height: AppSpace.s24),
+                StepLabel(
+                  number: 1,
+                  label: 'Mood check-in',
+                  active: _mood == null,
+                ),
+                const SizedBox(height: AppSpace.s9),
+                MoodCard(
+                  child: MoodStrip(
+                    selected: _mood,
+                    onSelected: (mood) => setState(() => _mood = mood),
                   ),
                 ),
-                const SizedBox(height: AppSpace.s16),
-                // No check-in history is stored yet.
-                const WellnessFingerprintCard(),
+                AnimatedSize(
+                  duration: AppMotion.of(context),
+                  curve: AppMotion.curve,
+                  child: _showSupport
+                      ? const Padding(
+                          padding: EdgeInsets.only(top: AppSpace.s16),
+                          child: SupportOptions(),
+                        )
+                      : const SizedBox(width: double.infinity),
+                ),
+                const SizedBox(height: AppSpace.s30),
+                StepLabel(number: 2, label: 'Questions', active: _mood != null),
+                const SizedBox(height: AppSpace.s9),
+                // Never locked: the mood step guides, it does not block.
+                CheckInHero(
+                  active: _mood != null,
+                  onStart: () => context.go(AppRoutes.assessment),
+                ),
+                // Hidden: no check-ins are saved yet, so it could only ever
+                // show zero. Unlocked by saved check-ins (Module 11).
+                if (Features.progress) ...[
+                  const SizedBox(height: AppSpace.s30),
+                  const StepLabel(
+                    number: 3,
+                    label: 'Your progress',
+                    active: false,
+                  ),
+                  const SizedBox(height: AppSpace.s9),
+                  const WellnessFingerprintCard(),
+                ],
               ],
             ),
           ),

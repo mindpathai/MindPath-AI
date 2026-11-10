@@ -4,7 +4,7 @@ import 'package:mindpath_ai/theme/app_colors.dart';
 import 'package:mindpath_ai/theme/app_tokens.dart';
 import 'package:mindpath_ai/widgets/press_scale.dart';
 
-/// The design's `.card`: white, radius 22, a 1px line-2 border, no shadow.
+/// The design's `.card`: warm off-white, radius 22, a 1px line-2 border, no shadow.
 /// Pass [onTap] to make the whole card tappable, with press feedback.
 class AppCard extends StatelessWidget {
   const AppCard({

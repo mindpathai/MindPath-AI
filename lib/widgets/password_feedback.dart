@@ -12,12 +12,13 @@ class PasswordFeedback extends StatelessWidget {
 
   final String password;
 
-  /// Label, filled segments and their colour per level. No red segment.
+  /// Label, filled segments and their colour per level. A weak password is
+  /// not an alert, so it fills in the earth tone rather than clay.
   static const Map<PasswordStrength, (String, int, Color)> _levels = {
     PasswordStrength.none: ('', 0, AppColors.line2),
-    PasswordStrength.weak: ('Weak', 1, AppColors.clay),
-    PasswordStrength.fair: ('Fair', 2, AppColors.peri),
-    PasswordStrength.strong: ('Strong', 3, AppColors.sage),
+    PasswordStrength.weak: ('Weak', 1, AppColors.sand),
+    PasswordStrength.fair: ('Okay', 2, AppColors.sage),
+    PasswordStrength.strong: ('Strong', 3, AppColors.pine),
   };
 
   @override

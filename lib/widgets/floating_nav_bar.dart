@@ -7,7 +7,7 @@ import 'package:mindpath_ai/widgets/line_icon.dart';
 
 typedef NavItem = ({LineGlyph glyph, String label});
 
-/// The design's `.nav`: a white bar inset 14px from the sides and 16px
+/// The design's `.nav`: a warm off-white bar inset 14px from the sides and 16px
 /// from the bottom, radius 26. The active tab's icon sits on a pine-soft
 /// pill. No badges or counters.
 class FloatingNavBar extends StatelessWidget {
@@ -109,11 +109,18 @@ class _NavTab extends StatelessWidget {
               child: LineIcon(item.glyph, color: color),
             ),
             const SizedBox(height: AppSpace.s3),
-            AnimatedDefaultTextStyle(
-              duration: AppMotion.duration,
-              curve: AppMotion.curve,
-              style: AppTypography.captionSemi.copyWith(color: color),
-              child: Text(item.label, maxLines: 1),
+            // Flexible hands the label only the height left in the bar, so at
+            // very large text it shrinks in both directions, never clips.
+            Flexible(
+              child: AnimatedDefaultTextStyle(
+                duration: AppMotion.duration,
+                curve: AppMotion.curve,
+                style: AppTypography.captionSemi.copyWith(color: color),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(item.label, maxLines: 1),
+                ),
+              ),
             ),
           ],
         ),

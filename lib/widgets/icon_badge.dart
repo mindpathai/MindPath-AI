@@ -4,11 +4,12 @@ import 'package:mindpath_ai/theme/app_colors.dart';
 import 'package:mindpath_ai/theme/app_tokens.dart';
 import 'package:mindpath_ai/widgets/line_icon.dart';
 
-/// Colour pairs for badges and level tags.
+/// Colour pairs for badges and level tags. Clay is left out on purpose: it
+/// is the alert colour, and a badge or a result is never an alert.
 enum Tone {
   pine(AppColors.pineSoft, AppColors.pine),
-  clay(AppColors.claySoft, AppColors.clay),
-  sage(AppColors.sageSoft, AppColors.sage);
+  sage(AppColors.sageSoft, AppColors.sage),
+  sand(AppColors.sandSoft, AppColors.sand);
 
   const Tone(this.soft, this.strong);
 

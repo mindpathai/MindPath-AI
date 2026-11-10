@@ -8,8 +8,8 @@ import 'package:mindpath_ai/widgets/line_icon.dart';
 
 /// The closing note on the sign-in screens.
 const String kNoDiagnosisNote =
-    'MindPath gives preliminary screening and self-support. It does not '
-    'diagnose, and it is not a substitute for a clinician.';
+    'MindPath gives preliminary screening and self-help. It does not '
+    'diagnose, and it does not replace a doctor or therapist.';
 
 /// Centres a screen body in a phone-width column (max 440).
 class ContentWidth extends StatelessWidget {
@@ -147,15 +147,12 @@ class NoteText extends StatelessWidget {
   }
 }
 
-/// Back chevron, centred title and an optional trailing action, as on the
-/// sorting and result screens.
+/// Back chevron, centred title and an optional trailing action. Every
+/// screen outside the tab bar starts with one, so Back is always in the
+/// same place (top left). Leave [title] empty where the screen's own
+/// heading already names it.
 class ScreenTopBar extends StatelessWidget {
-  const ScreenTopBar({
-    super.key,
-    required this.title,
-    this.onBack,
-    this.trailing,
-  });
+  const ScreenTopBar({super.key, this.title = '', this.onBack, this.trailing});
 
   final String title;
   final VoidCallback? onBack;
@@ -186,14 +183,16 @@ class ScreenTopBar extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Semantics(
-              header: true,
-              child: Text(
-                title,
-                textAlign: TextAlign.center,
-                style: AppTypography.smallBold,
-              ),
-            ),
+            child: title.isEmpty
+                ? const SizedBox.shrink()
+                : Semantics(
+                    header: true,
+                    child: Text(
+                      title,
+                      textAlign: TextAlign.center,
+                      style: AppTypography.smallBold,
+                    ),
+                  ),
           ),
           SizedBox(
             width: AppSizes.minTap,

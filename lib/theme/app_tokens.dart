@@ -1,5 +1,6 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/widgets.dart' show BuildContext, MediaQuery;
 
 import 'package:mindpath_ai/theme/app_colors.dart';
 
@@ -65,16 +66,24 @@ abstract final class AppShadows {
 }
 
 /// One duration and curve for every animation. No bounce or spring.
+///
+/// Slow and symmetric on purpose: sudden movement draws the eye and can
+/// startle an anxious user, so every change eases in and out over about a
+/// third of a second. The phone's reduced-motion setting turns it off.
 abstract final class AppMotion {
-  static const Duration duration = Duration(milliseconds: 240);
-  static const Curve curve = Curves.easeOutCubic;
+  static const Duration duration = Duration(milliseconds: 320);
+  static const Curve curve = Curves.easeInOutCubic;
 
-  /// Press-down feedback on tappable cards and buttons.
-  static const Duration press = Duration(milliseconds: 120);
-  static const double pressScale = 0.97;
+  /// [duration], or instant when the user has asked for reduced motion.
+  static Duration of(BuildContext context) =>
+      MediaQuery.disableAnimationsOf(context) ? Duration.zero : duration;
+
+  /// Press-down feedback on tappable cards and buttons: felt, not seen.
+  static const Duration press = Duration(milliseconds: 160);
+  static const double pressScale = 0.98;
 
   /// The selected mood face.
-  static const double selectedScale = 1.08;
+  static const double selectedScale = 1.05;
 }
 
 /// Fixed component dimensions from the design.
@@ -92,6 +101,7 @@ abstract final class AppSizes {
 
   static const double avatar = 40;
   static const double badge = 44;
+  static const double stepBadge = 22;
   static const double moodFace = 50;
   static const double moodIcon = 24;
   static const double ripple = 190;

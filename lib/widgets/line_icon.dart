@@ -47,15 +47,48 @@ abstract final class LineGlyphs {
     'M5 15v3.5A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V15',
   ]);
 
+  // Dashboard sections: each should read without its heading.
+
+  /// A smiling face, for how the user feels.
+  static const mood = LineGlyph([
+    _ring,
+    'M8.5 14c1 .9 2.1 1.4 3.5 1.4s2.5-.5 3.5-1.4',
+    'M8.5 9.5h.01M15.5 9.5h.01',
+  ]);
+
+  /// A clipboard with a tick, for answering questions.
+  static const questions = LineGlyph([
+    'M7.5 4h9a2.5 2.5 0 0 1 2.5 2.5v12a2.5 2.5 0 0 1 -2.5 2.5h-9'
+        'a2.5 2.5 0 0 1 -2.5 -2.5v-12a2.5 2.5 0 0 1 2.5 -2.5z',
+    'M9 3.5h6v2.5H9z',
+    'M8.8 13.3l2.3 2.3 4.2-4.6',
+  ]);
+
+  /// Curling lines of moving air.
   static const breathe = LineGlyph([
-    'M12 20c3.9 0 7-2.4 7-5.5S15.9 9 12 9s-7 2.4-7 5.5S8.1 20 12 20Z',
-    'M12 9V4M9 6l3-2 3 2',
+    'M9.59 4.59A2 2 0 1 1 11 8H2',
+    'M12.59 19.41A2 2 0 1 0 14 16H2',
+    'M17.73 7.73A2.5 2.5 0 1 1 19.5 12H2',
   ]);
-  static const ground = LineGlyph([
-    'M12 21V9',
-    'M12 9c0-3.3 2.7-6 6-6 0 3.3-2.7 6-6 6Z',
-    'M12 14c0-2.8-2.2-5-5-5 0 2.8 2.2 5 5 5Z',
+
+  /// An open hand, for noticing what is around you.
+  static const senses = LineGlyph([
+    'M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2',
+    'M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2',
+    'M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8',
+    'M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34'
+        'l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15',
   ]);
+
+  /// A phone handset, for reaching help.
+  static const phone = LineGlyph([
+    'M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1'
+        '-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72'
+        ' 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0'
+        ' 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1'
+        ' 22 16.92z',
+  ]);
+
   static const ladder = LineGlyph([
     'M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1'
         'M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1',
@@ -64,11 +97,6 @@ abstract final class LineGlyphs {
   // Bottom navigation
   static const home = LineGlyph([
     'M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4v-5h-6v5H5a1 1 0 0 1-1-1Z',
-  ]);
-  static const checkIn = LineGlyph([
-    'M7.5 4h9a2.5 2.5 0 0 1 2.5 2.5v12a2.5 2.5 0 0 1 -2.5 2.5h-9'
-        'a2.5 2.5 0 0 1 -2.5 -2.5v-12a2.5 2.5 0 0 1 2.5 -2.5z',
-    'M9 3.5h6v2.5H9zM9 11h6M9 15h4',
   ]);
   static const therapy = LineGlyph([
     'M12 21V10',
