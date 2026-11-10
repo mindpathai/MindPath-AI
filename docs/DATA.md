@@ -27,9 +27,9 @@ and every result from them must be described as "posted in r/OCD", not as a diag
 
 | File | Classes | Rows per class | Total | Role |
 |---|---|---|---|---|
-| `ml/data/ocd_corpus_2class.csv` | ocd, other_condition | 24,395 | 48,790 | **Primary corpus for the thesis** |
+| `ml/data/ocd_corpus_2class.csv` | ocd, other_condition | 24,393 | 48,786 | **Primary corpus for the thesis** |
 | `ml/data/ocd_corpus_2class_sample.csv` | ocd, other_condition | 8,000 | 16,000 | Quick iteration on Colab free tier |
-| `ml/data/ocd_corpus_3class.csv` | ocd, other_condition, control | 24,395 | 73,185 | Secondary, for the app's "no indication" path |
+| `ml/data/ocd_corpus_3class.csv` | ocd, other_condition, control | 24,393 | 73,179 | Secondary, for the app's "no indication" path |
 
 Columns in every file: `post_id`, `label`, `text`, `word_count`, `source_subreddit`.
 
@@ -37,12 +37,12 @@ Class composition:
 
 | Corpus | Class | Source subreddits (rows) | Mean / median words |
 |---|---|---|---|
-| 2-class | ocd | r/OCD 24,395 | 170.5 / 116 |
-| 2-class | other_condition | r/ADHD 8,323, r/ptsd 5,436, r/depression 5,331, r/aspergers 5,305 | 199.9 / 142 |
-| 2-class sample | ocd | r/OCD 8,000 | 169.4 / 117 |
-| 2-class sample | other_condition | r/ADHD 2,741, r/depression 1,757, r/ptsd 1,756, r/aspergers 1,746 | 199.1 / 142 |
+| 2-class | ocd | r/OCD 24,393 | 170.4 / 116 |
+| 2-class | other_condition | r/ADHD 8,321, r/ptsd 5,424, r/depression 5,351, r/aspergers 5,297 | 202.0 / 143 |
+| 2-class sample | ocd | r/OCD 8,000 | 169.5 / 116 |
+| 2-class sample | other_condition | r/ADHD 2,698, r/ptsd 1,837, r/aspergers 1,736, r/depression 1,729 | 199.3 / 143 |
 | 3-class | ocd, other_condition | identical rows to the 2-class corpus | as above |
-| 3-class | control | r/personalfinance 12,661, r/fitness 11,734 | 147.7 / 115 |
+| 3-class | control | r/personalfinance 12,659, r/fitness 11,734 | 147.7 / 115 |
 
 The `ocd` and `other_condition` rows are the same posts in the 2-class and 3-class files;
 only the row order differs. The sample is a strict subset of the 2-class corpus. All
@@ -118,24 +118,37 @@ Applied by `ml/scripts/prepare_ocd_corpus.py`, in this order, identically to eve
    self-reports such as "I was diagnosed as having", "I've had the diagnosis",
    "got diagnosed" and "self-diagnosed".
 7. **Bare condition names removed:** any remaining OCD (and subtypes),
-   obsessive-compulsive, ADHD, PTSD / C-PTSD, Asperger's, aspie, autism, autistic,
-   depression. `depressed` is kept, because it describes a mood rather than naming a class.
-8. **Short posts dropped:** under 20 words after cleaning (2,857 posts).
-9. **Duplicates dropped:** identical text or identical post ID (170 posts).
+   obsessive-compulsive, OCPD, ADHD, PTSD / C-PTSD, Asperger's, aspie, autism, autistic,
+   depression. The whole token goes whenever a label appears anywhere inside it, so
+   plurals, compounds, hashtags, handles and site names are removed too ("OCDs",
+   "OCDers", "OCDing", "HarmOCD", "pureOCD", "IOCDF", "#ocdmemes", "ADHDers",
+   "aspergians", "autistics"), as are misspellings found in the sources ("PSTD",
+   "Asbergers", "Aspbergers", "autisitc", "autisim"). `depressed` is kept, because it
+   describes a mood rather than naming a class.
+8. **Short posts dropped:** under 20 words after cleaning (2,859 posts).
+9. **Duplicates dropped:** identical text or identical post ID (172 posts).
 10. **No identifier columns:** `author`, `username`, `user`, `author_fullname` and `name`
     are never carried into the output; the script asserts this.
 11. **Balancing:** each corpus is downsampled to its smallest class. `ocd` is the
-    smallest (24,395 usable posts of 42,826), so 24,395 posts are drawn from the 59,976
+    smallest (24,393 usable posts of 42,826), so 24,393 posts are drawn from the 59,974
     available `other_condition` posts and from the 45,282 available `control` posts.
 
 Steps 6 and 7 are essential. Without them a model learns to spot "I have OCD" or the
 word "OCD" itself, and the reported accuracy measures that phrase rather than anything
 about how people with OCD write.
 
-Residual check on the final corpora: no post contains an OCD, ADHD or PTSD label, a
-u/ or r/ mention, or a URL. Word forms the patterns do not cover survive in a few posts:
-"obsessive-compulsiveness" (3 `ocd` posts) and "autistics", "aspergic", "aspergians"
-(73 posts, 72 of them `other_condition`).
+Residual check on the final corpora (rebuilt 2026-11-11): **0 posts** in any of the
+three files contain a condition label anywhere in the text, including inside another word
+(OCD, OCPD, ADHD, PTSD, Asperger, autis-, aspie, obsessive-compulsive, depression and the
+misspellings above), and 0 contain a URL or a u/ or r/ mention. The script runs this check
+on every output file and stops with an error if any post fails it.
+
+An earlier build matched condition names as whole words only. Plural, compound and hashtag
+forms survived in about 0.6% of posts per class (155 `ocd` and 152 `other_condition`
+posts in the 2-class corpus), most often "OCDs", "IOCDF", "SOOCD", "OCDers", "HarmOCD"
+and "ADHDers". Widening the pattern removed them. In each of `ocd` and `other_condition`
+one more post fell under 20 words and one more became a duplicate of another post once its
+label was gone, which is why each class is now 24,393 rather than 24,395.
 
 ### Known limitations
 
@@ -179,7 +192,7 @@ a weak pairing.
   2021. This is the same collection and format, so it is far weaker than limitation 1,
   and no time-specific words appear among the distinctive words; it is still a possible
   shortcut through period-specific topics.
-- **Length difference.** `other_condition` posts are longer (median 142 words against
+- **Length difference.** `other_condition` posts are longer (median 143 words against
   116 for `ocd`). Report whether the model's errors correlate with length.
 - **Selection by survival.** 40% of r/OCD posts were removed or deleted and are excluded,
   so the corpus over-represents posts that moderators and authors left up.
@@ -564,7 +577,7 @@ still has an `author` column.
 | `ml/data/hinder-2018/`, 9 class subfolders | Present (extracted 2026-10-27), 1,323 images, 97 to 225 per class |
 | `ml/data/reddit_mental_health/`, 11 CSVs | Present, 11 of 11, MD5-verified against Zenodo |
 | `ml/data/extras/reddit_mental_health_posts/ocd_clean.csv` | Present, 42,826 rows, no `author` column |
-| `ml/data/ocd_corpus_2class.csv` and `ocd_corpus_3class.csv` | Present, 48,790 and 73,185 rows |
+| `ml/data/ocd_corpus_2class.csv` and `ocd_corpus_3class.csv` | Present, 48,786 and 73,179 rows |
 | `ml/data/extras/mendeley_suicide/` | **Missing.** Needs a browser download from https://data.mendeley.com/datasets/z8s6w86tr3/2 |
 
 ### Checks
@@ -605,9 +618,9 @@ train 35+35, valid 10+10, test 5+5, Clean+Messy). Each folder also has its READM
 
 | Folder | File | Size | Rows |
 |---|---|---|---|
-| `ml/data` | `ocd_corpus_2class.csv` | 49.7 MB | 48,790 |
+| `ml/data` | `ocd_corpus_2class.csv` | 49.9 MB | 48,786 |
 | `ml/data` | `ocd_corpus_2class_sample.csv` | 16.2 MB | 16,000 |
-| `ml/data` | `ocd_corpus_3class.csv` | 70.4 MB | 73,185 |
+| `ml/data` | `ocd_corpus_3class.csv` | 70.6 MB | 73,179 |
 | `ml/data/extras/depression-reddit-cleaned` | `depression_dataset_reddit_cleaned.csv` | 2.8 MB | 7,731 |
 | `ml/data/extras/Mental-Health_Text-Classification_Dataset` | `mental_health_combined_test.csv` | 0.8 MB | 992 |
 | `ml/data/extras/Mental-Health_Text-Classification_Dataset` | `mental_health_feature_engineered.csv` | 28.5 MB | 49,612 |

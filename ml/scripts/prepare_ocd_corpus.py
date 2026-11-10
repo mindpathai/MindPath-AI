@@ -115,11 +115,22 @@ SELF_REPORT = [re.compile(p, re.I) for p in (
     r"\bself[\s-]*diagnos\w*",
 )]
 # Anything left after the phrases above: a bare diagnostic label still names the class.
+# The whole token goes whenever a label appears anywhere inside it, so plurals,
+# compounds, hashtags, handles and site names go too: OCDs, OCDers, OCDing, HarmOCD,
+# pureOCD, IOCDF, #ocdmemes, hope4ocd.com, ADHDers, C-PTSD, aspergians, autistics.
+# A whole-word match missed these (about 0.6% of posts per class). Common misspellings
+# found in the sources are covered too: OCPD, PSTD, PTDS, A.D.H.D, Asbergers,
+# Aspbergers, Aspurgers, autisitc, autisim, autsim.
 # "depression" is here because r/depression is one of the other_condition sources;
 # "depressed" is kept, since it describes a mood rather than naming the class.
-BARE_LABEL = re.compile(r"\b(?:\w?ocd|o\.c\.d\.?|obsessive[\s-]*compulsive(?:\s+disorder)?"
-                        r"|adhd|c-?ptsd|ptsd|asperger'?s?|aspies?|autism|autistic|autists?"
-                        r"|depression)\b", re.I)
+LABEL_CORE = (r"(?:ocd|o\.c\.d|ocpd|adhd|a\.d\.h\.d|ptsd|pstd|ptds"
+              r"|as(?:p|b|pb)[eu]rg|autis|autsim|depression)")
+# Too short to match inside other words, so these go only as whole words.
+LABEL_WORDS = r"\b(?:adhs|aspies?|aspys?|aspis?)\b|\bobsessive[\s-]*compulsiv\w*"
+BARE_LABEL = re.compile(rf"[\w#@'./-]*{LABEL_CORE}[\w#@'./-]*"
+                        rf"|{LABEL_WORDS}(?:\s+disorder)?", re.I)
+# What must never survive cleaning, checked on every output file.
+RESIDUAL = re.compile(rf"{LABEL_CORE}|{LABEL_WORDS}", re.I)
 WORD = re.compile(r"[A-Za-z][A-Za-z']*")
 
 
@@ -299,6 +310,15 @@ def main():
         path = os.path.join(args.out_dir, fname)
         corpus[COLUMNS].to_csv(path, index=False)
         describe(corpus, labels, path)
+
+    print("\nResidual check: posts that still contain a condition label anywhere")
+    leaked = 0
+    for fname, corpus, labels in outputs:
+        hits = corpus[corpus["text"].str.contains(RESIDUAL)]
+        leaked += len(hits)
+        print(f"  {fname:<30} {len(hits)}")
+    if leaked:
+        sys.exit("Condition labels survived cleaning; extend BARE_LABEL.")
 
     print("\nFifteen most distinctive words per class (weighted log-odds z-score, class vs rest).")
     print("Check by eye: none of these should name the condition or the subreddit.")
