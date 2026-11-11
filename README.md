@@ -18,6 +18,4 @@ samples, guidance on mobile development, and a full API reference.
 
 # Developers 
 
-## Abdul Momin Abbasi
-## Samama Zubair 
-## Wasay Tariq 
+## Abdul Momin Abbasi (OG)
